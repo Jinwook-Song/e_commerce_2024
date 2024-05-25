@@ -1,6 +1,7 @@
 import 'package:e_commerce/presentation/screens/category/category_screen.dart';
 import 'package:e_commerce/presentation/screens/home/home_screen.dart';
 import 'package:e_commerce/presentation/screens/main/cubit/bottom_nav_cubit.dart';
+import 'package:e_commerce/presentation/screens/main/cubit/mall_type_cubit.dart';
 import 'package:e_commerce/presentation/screens/main/widgets/top_app_bar/top_app_bar.dart';
 import 'package:e_commerce/presentation/screens/search/search_screen.dart';
 import 'package:e_commerce/presentation/screens/user/user_screen.dart';
@@ -13,8 +14,11 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => BottomNavCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => BottomNavCubit()),
+        BlocProvider(create: (_) => MallTypeCubit()),
+      ],
       child: const MainScreenView(),
     );
   }
