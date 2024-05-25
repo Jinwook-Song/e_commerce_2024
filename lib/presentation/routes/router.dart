@@ -1,5 +1,5 @@
 import 'package:e_commerce/presentation/routes/routes.dart';
-import 'package:e_commerce/presentation/screens/home/home_screen.dart';
+import 'package:e_commerce/presentation/screens/main/main_screen.dart';
 import 'package:e_commerce/presentation/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -13,10 +13,10 @@ final GoRouter router = GoRouter(
       builder: (context, state) => const SplashScreen(),
     ),
     GoRoute(
-      path: Routes.home.path,
-      name: Routes.home.name,
+      path: Routes.main.path,
+      name: Routes.main.name,
       pageBuilder: (context, state) => CustomTransitionPage(
-        child: const HomeScreen(),
+        child: const MainScreen(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(
             opacity: animation,
