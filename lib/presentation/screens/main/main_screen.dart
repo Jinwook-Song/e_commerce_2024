@@ -1,7 +1,11 @@
-import 'package:e_commerce/core/theme/constant/app_colors.dart';
-import 'package:e_commerce/core/theme/constant/app_icons.dart';
-import 'package:e_commerce/core/theme/custom/custom_font_weight.dart';
+import 'package:e_commerce/presentation/screens/category/category_screen.dart';
+import 'package:e_commerce/presentation/screens/home/home_screen.dart';
+import 'package:e_commerce/presentation/screens/main/cubit/bottom_nav_cubit.dart';
+import 'package:e_commerce/presentation/screens/main/widgets/top_app_bar/top_app_bar.dart';
+import 'package:e_commerce/presentation/screens/search/search_screen.dart';
+import 'package:e_commerce/presentation/screens/user/user_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 class MainScreen extends StatelessWidget {
@@ -9,77 +13,52 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => BottomNavCubit(),
+      child: const MainScreenView(),
+    );
+  }
+}
+
+class MainScreenView extends StatelessWidget {
+  const MainScreenView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(44),
-        child: Container(
-          color: Theme.of(context).primaryColor,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-            child: AppBar(
-              backgroundColor: Colors.transparent,
-              leadingWidth: 86,
-              leading: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SvgPicture.asset(AppIcons.mainLogo),
-              ),
-              centerTitle: true,
-              title: Text(
-                'Tab bar',
-                style:
-                    const TextStyle(color: AppColors.white, fontSize: 20).bold,
-              ),
-              actions: [
-                Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: SvgPicture.asset(
-                    AppIcons.location,
-                    colorFilter: const ColorFilter.mode(
-                      AppColors.background,
-                      BlendMode.srcIn,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: SvgPicture.asset(
-                    AppIcons.cart,
-                    colorFilter: const ColorFilter.mode(
-                      AppColors.background,
-                      BlendMode.srcIn,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+      appBar: const TopAppBar(),
+      body: BlocBuilder<BottomNavCubit, BottonNav>(
+        builder: (_, state) {
+          switch (state) {
+            case BottonNav.home:
+              return const HomeScreen();
+            case BottonNav.category:
+              return const CategoryScreen();
+            case BottonNav.search:
+              return const SearchScreen();
+            case BottonNav.user:
+              return const UserScreen();
+          }
+        },
       ),
-      body: const Center(
-        child: Text('Main'),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        type: BottomNavigationBarType.fixed,
-        items: [
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(AppIcons.navHome),
-            label: 'home',
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(AppIcons.navCategory),
-            label: 'category',
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(AppIcons.navSearch),
-            label: 'search',
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(AppIcons.navUser),
-            label: 'user',
-          ),
-        ],
+      bottomNavigationBar: BlocBuilder<BottomNavCubit, BottonNav>(
+        builder: (_, state) {
+          return BottomNavigationBar(
+            currentIndex: state.index,
+            onTap: (index) => context.read<BottomNavCubit>().changeIndex(index),
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            type: BottomNavigationBarType.fixed,
+            items: [
+              for (final navItem in BottonNav.values)
+                BottomNavigationBarItem(
+                  icon: SvgPicture.asset(navItem.icon),
+                  activeIcon: SvgPicture.asset(navItem.activeIcon),
+                  label: navItem.tabLabel,
+                ),
+            ],
+          );
+        },
       ),
     );
   }
