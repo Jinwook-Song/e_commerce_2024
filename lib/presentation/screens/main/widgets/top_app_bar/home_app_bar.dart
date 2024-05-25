@@ -49,13 +49,14 @@ class HomeAppbar extends StatelessWidget {
                         text: MallType.values[index].label,
                       ),
                     ),
+                    indicatorWeight: 0,
+                    indicatorSize: TabBarIndicatorSize.tab,
                     indicator: BoxDecoration(
                       color: state.theme.indicatorColor,
                       borderRadius: const BorderRadius.all(
                         Radius.circular(CustomAppBarTheme.tabBarRadius),
                       ),
                     ),
-                    indicatorSize: TabBarIndicatorSize.tab,
                     dividerColor: Colors.transparent,
                     labelColor: state.theme.labelColor,
                     labelStyle: Theme.of(context).textTheme.labelLarge.bold,
