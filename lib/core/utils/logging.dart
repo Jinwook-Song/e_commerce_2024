@@ -7,15 +7,15 @@ Logger loggerBrief = Logger(
   printer: PrettyPrinter(methodCount: 0, printTime: true),
 );
 
-void logging<T>(
-  T messages, {
+void logging(
+  dynamic messages, {
   LogType logType = LogType.debug,
   Object? error,
   StackTrace? stackTrace,
 }) {
   final time = DateTime.now();
   String message;
-  if (messages is List) {
+  if (messages is List && messages.isNotEmpty) {
     message = messages.map((message) => message.toString()).join('\n');
   } else {
     message = messages.toString();

@@ -8,14 +8,14 @@ import 'package:e_commerce/presentation/screens/main/cubit/mall_type_cubit.dart'
 
 class DisplayMockApi implements DisplayApi {
   @override
-  Future<ResponseWrapper<List<MenuDto>>> getMenusByMallType(MallType mallType) {
+  Future<ResponseWrapper<List<MenuDto>>> getMenusByMallType(String mallType) {
     return Future(
       () {
         return ResponseWrapper(
           status: 'SUCCESS',
           code: '0000',
           data: _menuParser(
-            mallType == MallType.market
+            mallType == MallType.market.name
                 ? DisplayMockData.menusByMarket
                 : DisplayMockData.menusByMarket,
           ),
@@ -25,7 +25,7 @@ class DisplayMockApi implements DisplayApi {
   }
 
   List<MenuDto> _menuParser(String source) {
-    List<dynamic> json = jsonDecode(source);
+    List json = jsonDecode(source);
     return json.map((menuJson) => MenuDto.fromJson(menuJson)).toList();
   }
 }

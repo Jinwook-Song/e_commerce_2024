@@ -20,7 +20,7 @@ class _DisplayApi implements DisplayApi {
 
   @override
   Future<ResponseWrapper<List<MenuDto>>> getMenusByMallType(
-      MallType mallType) async {
+      String mallType) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -33,7 +33,7 @@ class _DisplayApi implements DisplayApi {
     )
             .compose(
               _dio.options,
-              '/api/menus/${mallType.name}',
+              '/api/menus/${mallType}',
               queryParameters: queryParameters,
               data: _data,
             )
