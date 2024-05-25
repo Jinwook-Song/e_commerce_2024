@@ -1,3 +1,4 @@
+import 'package:e_commerce/core/theme/theme_data.dart';
 import 'package:e_commerce/presentation/routes/router.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,9 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       routerConfig: router,
+      theme: CustomThemeData.themeData,
     );
   }
 }

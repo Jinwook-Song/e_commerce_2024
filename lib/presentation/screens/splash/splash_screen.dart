@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:e_commerce/core/theme/constant/app_icons.dart';
 import 'package:e_commerce/presentation/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -26,12 +27,9 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // TODO: 하드코딩된 값 변경
-      backgroundColor: const Color(0xFF5F0080),
+      backgroundColor: Theme.of(context).primaryColor,
       body: Center(
-        child: SvgPicture.asset(
-          'assets/svg/main_logo.svg',
-        ),
+        child: SvgPicture.asset(AppIcons.mainLogo),
       ),
     );
   }
