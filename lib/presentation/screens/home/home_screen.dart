@@ -1,7 +1,10 @@
+import 'package:e_commerce/core/theme/constant/app_colors.dart';
 import 'package:e_commerce/core/utils/constants.dart';
 import 'package:e_commerce/core/utils/dialog/common_dialog.dart';
 import 'package:e_commerce/domain/usecase/display/display.usecase.dart';
 import 'package:e_commerce/presentation/screens/home/bloc/menu_bloc/menu_bloc.dart';
+import 'package:e_commerce/presentation/screens/home/widgets/global_nav/global_nav_bar.dart';
+import 'package:e_commerce/presentation/screens/home/widgets/global_nav/global_nav_bar_view.dart';
 import 'package:e_commerce/presentation/screens/main/cubit/mall_type_cubit.dart';
 import 'package:e_commerce/service_locator.dart';
 import 'package:flutter/material.dart';
@@ -37,11 +40,34 @@ class HomeScreenView extends StatelessWidget {
         builder: (_, state) {
           switch (state.status) {
             case Status.initial:
-            case Status.loading:
               return const Center(child: CircularProgressIndicator.adaptive());
+            case Status.loading:
+              return DefaultTabController(
+                key: ValueKey<MallType>(state.mallType),
+                length: state.menus.length,
+                child: Column(
+                  children: [
+                    GlobalNavBar(state.menus),
+                    GlobalNavBarView(
+                      menus: state.menus,
+                      mallType: state.mallType,
+                    ),
+                  ],
+                ),
+              );
             case Status.success:
-              return Center(
-                child: Text('menu: ${state.menus}'),
+              return DefaultTabController(
+                key: ValueKey<MallType>(state.mallType),
+                length: state.menus.length,
+                child: Column(
+                  children: [
+                    GlobalNavBar(state.menus),
+                    GlobalNavBarView(
+                      menus: state.menus,
+                      mallType: state.mallType,
+                    ),
+                  ],
+                ),
               );
 
             case Status.error:

@@ -32,6 +32,7 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
     emit(state.copyWith(status: Status.loading));
 
     try {
+      await Future.delayed(const Duration(milliseconds: 3000));
       final response = await _fetch(mallType);
       response.when(
         success: (menus) {
