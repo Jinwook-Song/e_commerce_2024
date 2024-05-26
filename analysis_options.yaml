@@ -34,4 +34,3 @@ analyzer:
     - lib/generated/
     - lib/generated/intl/
     - lib/generated/l10n.dart
-    - test/**
