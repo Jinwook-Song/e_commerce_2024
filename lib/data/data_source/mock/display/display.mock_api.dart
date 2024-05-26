@@ -17,7 +17,7 @@ class DisplayMockApi implements DisplayApi {
           data: _menuParser(
             mallType == MallType.market.name
                 ? DisplayMockData.menusByMarket
-                : DisplayMockData.menusByMarket,
+                : DisplayMockData.menusByBeauty,
           ),
         );
       },

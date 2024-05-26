@@ -18,7 +18,7 @@ linter:
     curly_braces_in_flow_control_structures: true
     avoid_print: true
     always_specify_types: false
-    sort_constructors_first: true
+    sort_constructors_first: false
     always_use_package_imports: true
     avoid_dynamic_calls: true
     # Doc comments

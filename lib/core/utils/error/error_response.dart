@@ -1,8 +1,8 @@
 class ErrorResponse {
-  ErrorResponse({
-    this.status,
-    this.code,
-    this.message,
+  const ErrorResponse({
+    this.status = 'SUCCESS',
+    this.code = '0000',
+    this.message = '',
   });
 
   final String? status;

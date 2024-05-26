@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:e_commerce/core/utils/error/error_response.dart';
 import 'package:e_commerce/data/data_source/remote/display.api.dart';
 import 'package:e_commerce/data/repository_impl/display_repository_impl.dart';
@@ -29,7 +31,7 @@ void main() {
     test('의존성이 정상적으로 주입되었다.', () => expect(displayUsecase, isNotNull));
 
     test('메뉴 리스트 불러오기 성공', () async {
-      const result = Result.success([Menu(tabId: -1, title: '패캠추천')]);
+      final result = Result.success([Menu(tabId: -1, title: '패캠추천')]);
       final usecase = MockGetMenusUsecase();
 
       when(() => usecase.mallType).thenReturn(MallType.market);

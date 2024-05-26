@@ -17,7 +17,7 @@ class CommonException {
         );
       } else {
         const code = '8888';
-        return ErrorResponse(
+        return const ErrorResponse(
           status: 'unExpected error',
           code: code,
           message: '서비스에 오류가 발생했습니다.',
@@ -25,7 +25,7 @@ class CommonException {
       }
     } else {
       const code = '7777';
-      return ErrorResponse(
+      return const ErrorResponse(
         status: 'unKnown error',
         code: code,
         message: '서비스에 오류가 발생했습니다.',
