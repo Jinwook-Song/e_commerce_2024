@@ -1,6 +1,18 @@
-import 'package:e_commerce/data/dto/display/menu/menu.dto.dart';
-import 'package:e_commerce/domain/model/display/menu/menu.model.dart';
+import 'package:e_commerce/data/dto/display/display.dto.dart';
+import 'package:e_commerce/domain/model/display/display.model.dart';
 
 extension MenuX on MenuDto {
-  Menu toModel() => Menu(tabId: tabIndex, title: title);
+  Menu toModel() => Menu(
+        tabId: tabIndex ?? 0,
+        title: title ?? '',
+      );
+}
+
+extension ViewModuleX on ViewModuleDto {
+  ViewModule toModel() => ViewModule(
+        type: type ?? '',
+        title: title ?? '',
+        subtitle: subtitle ?? '',
+        imageUrl: imageUrl ?? '',
+      );
 }

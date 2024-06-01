@@ -5,7 +5,6 @@ import 'package:e_commerce/core/utils/constants.dart';
 import 'package:e_commerce/domain/model/display/menu/menu.model.dart';
 import 'package:e_commerce/presentation/screens/home/bloc/menu_bloc/menu_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class GlobalNavBar extends StatelessWidget {

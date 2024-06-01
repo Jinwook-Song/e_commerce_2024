@@ -1,4 +1,3 @@
-import 'package:e_commerce/core/theme/constant/app_colors.dart';
 import 'package:e_commerce/core/utils/constants.dart';
 import 'package:e_commerce/core/utils/dialog/common_dialog.dart';
 import 'package:e_commerce/domain/usecase/display/display.usecase.dart';

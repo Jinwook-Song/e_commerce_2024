@@ -20,10 +20,10 @@ ViewModuleDto _$ViewModuleDtoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ViewModuleDto {
-  String get type => throw _privateConstructorUsedError;
-  String get title => throw _privateConstructorUsedError;
-  String get subtitle => throw _privateConstructorUsedError;
-  String get imageUrl => throw _privateConstructorUsedError;
+  String? get type => throw _privateConstructorUsedError;
+  String? get title => throw _privateConstructorUsedError;
+  String? get subtitle => throw _privateConstructorUsedError;
+  String? get imageUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -37,7 +37,7 @@ abstract class $ViewModuleDtoCopyWith<$Res> {
           ViewModuleDto value, $Res Function(ViewModuleDto) then) =
       _$ViewModuleDtoCopyWithImpl<$Res, ViewModuleDto>;
   @useResult
-  $Res call({String type, String title, String subtitle, String imageUrl});
+  $Res call({String? type, String? title, String? subtitle, String? imageUrl});
 }
 
 /// @nodoc
@@ -53,28 +53,28 @@ class _$ViewModuleDtoCopyWithImpl<$Res, $Val extends ViewModuleDto>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? type = null,
-    Object? title = null,
-    Object? subtitle = null,
-    Object? imageUrl = null,
+    Object? type = freezed,
+    Object? title = freezed,
+    Object? subtitle = freezed,
+    Object? imageUrl = freezed,
   }) {
     return _then(_value.copyWith(
-      type: null == type
+      type: freezed == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as String,
-      title: null == title
+              as String?,
+      title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      subtitle: null == subtitle
+              as String?,
+      subtitle: freezed == subtitle
           ? _value.subtitle
           : subtitle // ignore: cast_nullable_to_non_nullable
-              as String,
-      imageUrl: null == imageUrl
+              as String?,
+      imageUrl: freezed == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -87,7 +87,7 @@ abstract class _$$ViewModuleDtoImplCopyWith<$Res>
       __$$ViewModuleDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String type, String title, String subtitle, String imageUrl});
+  $Res call({String? type, String? title, String? subtitle, String? imageUrl});
 }
 
 /// @nodoc
@@ -101,28 +101,28 @@ class __$$ViewModuleDtoImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? type = null,
-    Object? title = null,
-    Object? subtitle = null,
-    Object? imageUrl = null,
+    Object? type = freezed,
+    Object? title = freezed,
+    Object? subtitle = freezed,
+    Object? imageUrl = freezed,
   }) {
     return _then(_$ViewModuleDtoImpl(
-      type: null == type
+      type: freezed == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as String,
-      title: null == title
+              as String?,
+      title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      subtitle: null == subtitle
+              as String?,
+      subtitle: freezed == subtitle
           ? _value.subtitle
           : subtitle // ignore: cast_nullable_to_non_nullable
-              as String,
-      imageUrl: null == imageUrl
+              as String?,
+      imageUrl: freezed == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -141,16 +141,16 @@ class _$ViewModuleDtoImpl implements _ViewModuleDto {
 
   @override
   @JsonKey()
-  final String type;
+  final String? type;
   @override
   @JsonKey()
-  final String title;
+  final String? title;
   @override
   @JsonKey()
-  final String subtitle;
+  final String? subtitle;
   @override
   @JsonKey()
-  final String imageUrl;
+  final String? imageUrl;
 
   @override
   String toString() {
@@ -190,22 +190,22 @@ class _$ViewModuleDtoImpl implements _ViewModuleDto {
 
 abstract class _ViewModuleDto implements ViewModuleDto {
   const factory _ViewModuleDto(
-      {final String type,
-      final String title,
-      final String subtitle,
-      final String imageUrl}) = _$ViewModuleDtoImpl;
+      {final String? type,
+      final String? title,
+      final String? subtitle,
+      final String? imageUrl}) = _$ViewModuleDtoImpl;
 
   factory _ViewModuleDto.fromJson(Map<String, dynamic> json) =
       _$ViewModuleDtoImpl.fromJson;
 
   @override
-  String get type;
+  String? get type;
   @override
-  String get title;
+  String? get title;
   @override
-  String get subtitle;
+  String? get subtitle;
   @override
-  String get imageUrl;
+  String? get imageUrl;
   @override
   @JsonKey(ignore: true)
   _$$ViewModuleDtoImplCopyWith<_$ViewModuleDtoImpl> get copyWith =>
