@@ -4,9 +4,15 @@ import 'package:e_commerce/data/data_source/mock/display/display_mock_data.dart'
 import 'package:e_commerce/data/data_source/remote/display.api.dart';
 import 'package:e_commerce/data/dto/common/response_wrapper/response_wrapper.dart';
 import 'package:e_commerce/data/dto/display/menu/menu.dto.dart';
+import 'package:e_commerce/data/dto/display/view_module/view_module.dto.dart';
 import 'package:e_commerce/presentation/screens/main/cubit/mall_type_cubit.dart';
 
 class DisplayMockApi implements DisplayApi {
+  List<T> _parser<T>(String source, T Function(Map<String, dynamic>) fromJson) {
+    List json = jsonDecode(source);
+    return json.map((itemJson) => fromJson(itemJson)).toList();
+  }
+
   @override
   Future<ResponseWrapper<List<MenuDto>>> getMenusByMallType(String mallType) {
     return Future(
@@ -14,18 +20,47 @@ class DisplayMockApi implements DisplayApi {
         return ResponseWrapper(
           status: 'SUCCESS',
           code: '0000',
-          data: _menuParser(
+          data: _parser(
             mallType == MallType.market.name
                 ? DisplayMockData.menusByMarket
                 : DisplayMockData.menusByBeauty,
+            (json) => MenuDto.fromJson(json),
           ),
         );
       },
     );
   }
 
-  List<MenuDto> _menuParser(String source) {
-    List json = jsonDecode(source);
-    return json.map((menuJson) => MenuDto.fromJson(menuJson)).toList();
+  @override
+  Future<ResponseWrapper<List<ViewModuleDto>>> getViewModulesByTabId(
+    int tabId,
+  ) {
+    late String source;
+    final endOfTabId = tabId % 10;
+    switch (endOfTabId) {
+      case 1:
+        source = DisplayMockData.viewModulesByTabIdCaseOne;
+      case 2:
+        source = DisplayMockData.viewModulesByTabIdCaseTwo;
+      case 3:
+        source = DisplayMockData.viewModulesByTabIdCaseThree;
+      case 4:
+        source = DisplayMockData.viewModulesByTabIdCaseFour;
+      case 5:
+        source = DisplayMockData.viewModulesByTabIdCaseFive;
+    }
+
+    return Future(
+      () {
+        return ResponseWrapper(
+          status: 'SUCCESS',
+          code: '0000',
+          data: _parser(
+            source,
+            (json) => ViewModuleDto.fromJson(json),
+          ),
+        );
+      },
+    );
   }
 }
