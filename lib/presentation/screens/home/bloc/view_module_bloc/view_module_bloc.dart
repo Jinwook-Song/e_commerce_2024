@@ -16,7 +16,9 @@ part 'view_module_bloc.freezed.dart';
 class ViewModuleBloc extends Bloc<ViewModuleEvent, ViewModuleState> {
   final DisplayUsecase _displayUsecase;
 
-  ViewModuleBloc(this._displayUsecase) : super(ViewModuleState());
+  ViewModuleBloc(this._displayUsecase) : super(ViewModuleState()) {
+    on<ViewModuleInitialized>(_onViewModuleInitialized);
+  }
 
   Future<Result<List<ViewModule>>> _fetch(int tabId) async {
     return await _displayUsecase.execute(usecase: GetViewModulesUsecase(tabId));

@@ -9,11 +9,11 @@ part of 'menu.dto.dart';
 _$MenuDtoImpl _$$MenuDtoImplFromJson(Map<String, dynamic> json) =>
     _$MenuDtoImpl(
       title: json['title'] as String? ?? '',
-      tabIndex: (json['tabIndex'] as num?)?.toInt() ?? -1,
+      tabId: (json['tabId'] as num?)?.toInt() ?? -1,
     );
 
 Map<String, dynamic> _$$MenuDtoImplToJson(_$MenuDtoImpl instance) =>
     <String, dynamic>{
       'title': instance.title,
-      'tabIndex': instance.tabIndex,
+      'tabId': instance.tabId,
     };

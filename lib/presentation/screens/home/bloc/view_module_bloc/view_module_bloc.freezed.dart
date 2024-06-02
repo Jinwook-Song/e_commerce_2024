@@ -135,7 +135,7 @@ class __$$ViewModuleStateImplCopyWithImpl<$Res>
 class _$ViewModuleStateImpl implements _ViewModuleState {
   _$ViewModuleStateImpl(
       {this.status = Status.initial,
-      this.tabId = -1,
+      this.tabId = 0,
       final List<ViewModule> viewModules = const <ViewModule>[],
       this.error = const ErrorResponse()})
       : _viewModules = viewModules;

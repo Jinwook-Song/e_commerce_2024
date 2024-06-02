@@ -3,7 +3,7 @@ import 'package:e_commerce/domain/model/display/display.model.dart';
 
 extension MenuX on MenuDto {
   Menu toModel() => Menu(
-        tabId: tabIndex ?? 0,
+        tabId: tabId ?? 0,
         title: title ?? '',
       );
 }

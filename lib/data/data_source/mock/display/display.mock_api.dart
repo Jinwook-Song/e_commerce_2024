@@ -48,6 +48,8 @@ class DisplayMockApi implements DisplayApi {
         source = DisplayMockData.viewModulesByTabIdCaseFour;
       case 5:
         source = DisplayMockData.viewModulesByTabIdCaseFive;
+      case _:
+        source = DisplayMockData.viewModulesByTabIdCaseOne;
     }
 
     return Future(

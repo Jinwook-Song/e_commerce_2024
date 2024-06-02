@@ -21,7 +21,7 @@ MenuDto _$MenuDtoFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$MenuDto {
   String? get title => throw _privateConstructorUsedError;
-  int? get tabIndex => throw _privateConstructorUsedError;
+  int? get tabId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -33,7 +33,7 @@ abstract class $MenuDtoCopyWith<$Res> {
   factory $MenuDtoCopyWith(MenuDto value, $Res Function(MenuDto) then) =
       _$MenuDtoCopyWithImpl<$Res, MenuDto>;
   @useResult
-  $Res call({String? title, int? tabIndex});
+  $Res call({String? title, int? tabId});
 }
 
 /// @nodoc
@@ -50,16 +50,16 @@ class _$MenuDtoCopyWithImpl<$Res, $Val extends MenuDto>
   @override
   $Res call({
     Object? title = freezed,
-    Object? tabIndex = freezed,
+    Object? tabId = freezed,
   }) {
     return _then(_value.copyWith(
       title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String?,
-      tabIndex: freezed == tabIndex
-          ? _value.tabIndex
-          : tabIndex // ignore: cast_nullable_to_non_nullable
+      tabId: freezed == tabId
+          ? _value.tabId
+          : tabId // ignore: cast_nullable_to_non_nullable
               as int?,
     ) as $Val);
   }
@@ -72,7 +72,7 @@ abstract class _$$MenuDtoImplCopyWith<$Res> implements $MenuDtoCopyWith<$Res> {
       __$$MenuDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? title, int? tabIndex});
+  $Res call({String? title, int? tabId});
 }
 
 /// @nodoc
@@ -87,16 +87,16 @@ class __$$MenuDtoImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? title = freezed,
-    Object? tabIndex = freezed,
+    Object? tabId = freezed,
   }) {
     return _then(_$MenuDtoImpl(
       title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String?,
-      tabIndex: freezed == tabIndex
-          ? _value.tabIndex
-          : tabIndex // ignore: cast_nullable_to_non_nullable
+      tabId: freezed == tabId
+          ? _value.tabId
+          : tabId // ignore: cast_nullable_to_non_nullable
               as int?,
     ));
   }
@@ -105,7 +105,7 @@ class __$$MenuDtoImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$MenuDtoImpl implements _MenuDto {
-  const _$MenuDtoImpl({this.title = '', this.tabIndex = -1});
+  const _$MenuDtoImpl({this.title = '', this.tabId = -1});
 
   factory _$MenuDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$MenuDtoImplFromJson(json);
@@ -115,11 +115,11 @@ class _$MenuDtoImpl implements _MenuDto {
   final String? title;
   @override
   @JsonKey()
-  final int? tabIndex;
+  final int? tabId;
 
   @override
   String toString() {
-    return 'MenuDto(title: $title, tabIndex: $tabIndex)';
+    return 'MenuDto(title: $title, tabId: $tabId)';
   }
 
   @override
@@ -128,13 +128,12 @@ class _$MenuDtoImpl implements _MenuDto {
         (other.runtimeType == runtimeType &&
             other is _$MenuDtoImpl &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.tabIndex, tabIndex) ||
-                other.tabIndex == tabIndex));
+            (identical(other.tabId, tabId) || other.tabId == tabId));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, title, tabIndex);
+  int get hashCode => Object.hash(runtimeType, title, tabId);
 
   @JsonKey(ignore: true)
   @override
@@ -151,7 +150,7 @@ class _$MenuDtoImpl implements _MenuDto {
 }
 
 abstract class _MenuDto implements MenuDto {
-  const factory _MenuDto({final String? title, final int? tabIndex}) =
+  const factory _MenuDto({final String? title, final int? tabId}) =
       _$MenuDtoImpl;
 
   factory _MenuDto.fromJson(Map<String, dynamic> json) = _$MenuDtoImpl.fromJson;
@@ -159,7 +158,7 @@ abstract class _MenuDto implements MenuDto {
   @override
   String? get title;
   @override
-  int? get tabIndex;
+  int? get tabId;
   @override
   @JsonKey(ignore: true)
   _$$MenuDtoImplCopyWith<_$MenuDtoImpl> get copyWith =>

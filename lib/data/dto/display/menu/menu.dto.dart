@@ -7,7 +7,7 @@ part 'menu.dto.g.dart';
 class MenuDto with _$MenuDto {
   const factory MenuDto({
     @Default('') String? title,
-    @Default(-1) int? tabIndex,
+    @Default(-1) int? tabId,
   }) = _MenuDto;
 
   factory MenuDto.fromJson(Map<String, dynamic> json) =>
