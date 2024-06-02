@@ -1,6 +1,5 @@
 import 'package:e_commerce/core/utils/constants.dart';
 import 'package:e_commerce/core/utils/dialog/common_dialog.dart';
-import 'package:e_commerce/domain/usecase/display/display.usecase.dart';
 import 'package:e_commerce/presentation/screens/home/bloc/menu_bloc/menu_bloc.dart';
 import 'package:e_commerce/presentation/screens/home/widgets/global_nav/global_nav_bar.dart';
 import 'package:e_commerce/presentation/screens/home/widgets/global_nav/global_nav_bar_view.dart';
@@ -17,8 +16,8 @@ class HomeScreen extends StatelessWidget {
     return BlocBuilder<MallTypeCubit, MallType>(
       builder: (_, state) {
         return BlocProvider(
-          create: (_) => MenuBloc(locator<DisplayUsecase>())
-            ..add(MenuInitialized(mallType: state)),
+          create: (_) =>
+              locator<MenuBloc>()..add(MenuInitialized(mallType: state)),
           child: const HomeScreenView(),
         );
       },

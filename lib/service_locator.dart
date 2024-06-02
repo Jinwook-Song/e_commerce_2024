@@ -3,6 +3,8 @@ import 'package:e_commerce/data/data_source/remote/display.api.dart';
 import 'package:e_commerce/data/repository_impl/display_repository_impl.dart';
 import 'package:e_commerce/domain/repository/display.repository.dart';
 import 'package:e_commerce/domain/usecase/display/display.usecase.dart';
+import 'package:e_commerce/presentation/screens/home/bloc/menu_bloc/menu_bloc.dart';
+import 'package:e_commerce/presentation/screens/home/bloc/view_module_bloc/view_module_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 final locator = GetIt.instance;
@@ -10,6 +12,7 @@ final locator = GetIt.instance;
 void setLocator() {
   _data();
   _domain();
+  _presentation();
 }
 
 void _data() {
@@ -26,4 +29,10 @@ void _domain() {
   locator.registerSingleton<DisplayUsecase>(
     DisplayUsecase(locator<DisplayRepository>()),
   );
+}
+
+void _presentation() {
+  locator.registerFactory(() => MenuBloc(locator<DisplayUsecase>()));
+
+  locator.registerFactory(() => ViewModuleBloc(locator<DisplayUsecase>()));
 }
