@@ -37,7 +37,8 @@ class DisplayMockApi implements DisplayApi {
     int page,
   ) {
     if (page == 4) {
-      return Future(
+      return Future.delayed(
+        const Duration(seconds: 2),
         () {
           return const ResponseWrapper(
             status: 'SUCCESS',
@@ -64,7 +65,8 @@ class DisplayMockApi implements DisplayApi {
         source = DisplayMockData.viewModulesByTabIdCaseOne;
     }
 
-    return Future(
+    return Future.delayed(
+      const Duration(seconds: 1),
       () {
         return ResponseWrapper(
           status: 'SUCCESS',

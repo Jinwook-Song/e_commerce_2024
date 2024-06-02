@@ -1,3 +1,4 @@
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:e_commerce/core/utils/constants.dart';
 import 'package:e_commerce/core/utils/error/error_response.dart';
 import 'package:e_commerce/core/utils/exception/common_exception.dart';
@@ -10,17 +11,27 @@ import 'package:e_commerce/presentation/screens/home/widgets/view_module_list/fa
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:stream_transform/stream_transform.dart';
 
 part 'view_module_event.dart';
 part 'view_module_state.dart';
 part 'view_module_bloc.freezed.dart';
+
+EventTransformer<E> _throttleDroppable<E>(Duration duration) {
+  return (events, mapper) {
+    return droppable<E>().call(events.throttle(duration), mapper);
+  };
+}
 
 class ViewModuleBloc extends Bloc<ViewModuleEvent, ViewModuleState> {
   final DisplayUsecase _displayUsecase;
 
   ViewModuleBloc(this._displayUsecase) : super(ViewModuleState()) {
     on<ViewModuleInitialized>(_onViewModuleInitialized);
-    on<ViewModuleFetched>(_onViewModuleFetched);
+    on<ViewModuleFetched>(
+      _onViewModuleFetched,
+      transformer: _throttleDroppable(const Duration(milliseconds: 400)),
+    );
   }
 
   Future<Result<List<ViewModule>>> _fetch(int tabId, [int page = 1]) async {
