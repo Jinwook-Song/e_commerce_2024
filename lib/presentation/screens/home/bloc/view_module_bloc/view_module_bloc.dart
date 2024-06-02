@@ -20,10 +20,13 @@ class ViewModuleBloc extends Bloc<ViewModuleEvent, ViewModuleState> {
 
   ViewModuleBloc(this._displayUsecase) : super(ViewModuleState()) {
     on<ViewModuleInitialized>(_onViewModuleInitialized);
+    on<ViewModuleFetched>(_onViewModuleFetched);
   }
 
-  Future<Result<List<ViewModule>>> _fetch(int tabId) async {
-    return await _displayUsecase.execute(usecase: GetViewModulesUsecase(tabId));
+  Future<Result<List<ViewModule>>> _fetch(int tabId, [int page = 1]) async {
+    return await _displayUsecase.execute(
+      usecase: GetViewModulesUsecase(tabId: tabId, page: page),
+    );
   }
 
   Future<void> _onViewModuleInitialized(
@@ -48,6 +51,65 @@ class ViewModuleBloc extends Bloc<ViewModuleEvent, ViewModuleState> {
                   return viewModuleFactory.textToWidget(viewModule);
                 },
               ).toList(),
+            ),
+          );
+        },
+        failure: (error) {
+          emit(state.copyWith(status: Status.error, error: error));
+        },
+      );
+    } catch (e) {
+      logging(e, logType: LogType.error);
+      emit(
+        state.copyWith(
+          status: Status.error,
+          error: CommonException.setError(e),
+        ),
+      );
+    }
+  }
+
+  Future<void> _onViewModuleFetched(
+    ViewModuleFetched event,
+    Emitter<ViewModuleState> emit,
+  ) async {
+    if (state.isEndOfPage) return;
+    final nextPage = state.currentPage + 1;
+    final tabId = state.tabId;
+
+    emit(state.copyWith(status: Status.loading));
+
+    try {
+      final response = await _fetch(tabId, nextPage);
+      response.when(
+        success: (viewModules) {
+          if (viewModules.isEmpty) {
+            emit(
+              state.copyWith(
+                status: Status.success,
+                currentPage: nextPage,
+                isEndOfPage: true,
+              ),
+            );
+            return;
+          }
+
+          ViewModuleFactory viewModuleFactory = ViewModuleFactory();
+
+          final viewModuleList = [...state.viewModules];
+          viewModuleList.addAll(
+            List.generate(
+              viewModules.length,
+              (index) => viewModuleFactory.textToWidget(viewModules[index]),
+            ),
+          );
+
+          emit(
+            state.copyWith(
+              status: Status.success,
+              tabId: tabId,
+              currentPage: nextPage,
+              viewModules: viewModuleList,
             ),
           );
         },
