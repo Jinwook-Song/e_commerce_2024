@@ -7,7 +7,8 @@ import 'package:e_commerce/presentation/screens/home/bloc/menu_bloc/menu_bloc.da
 import 'package:e_commerce/presentation/screens/home/bloc/view_module_bloc/view_module_bloc.dart';
 import 'package:get_it/get_it.dart';
 
-final locator = GetIt.instance;
+// ! Injectable Package로 대체됨
+// final locator = GetIt.instance;
 
 void setLocator() {
   _data();
@@ -16,23 +17,23 @@ void setLocator() {
 }
 
 void _data() {
-  locator.registerSingleton<DisplayApi>(DisplayMockApi());
+  // locator.registerSingleton<DisplayApi>(DisplayMockApi());
 }
 
 void _domain() {
   // repository
-  locator.registerSingleton<DisplayRepository>(
-    DisplayRepositoryImpl(locator<DisplayApi>()),
-  );
+  // locator.registerSingleton<DisplayRepository>(
+  //   DisplayRepositoryImpl(locator<DisplayApi>()),
+  // );
 
   // usecase
-  locator.registerSingleton<DisplayUsecase>(
-    DisplayUsecase(locator<DisplayRepository>()),
-  );
+  // locator.registerSingleton<DisplayUsecase>(
+  //   DisplayUsecase(locator<DisplayRepository>()),
+  // );
 }
 
 void _presentation() {
-  locator.registerFactory(() => MenuBloc(locator<DisplayUsecase>()));
+  // locator.registerFactory(() => MenuBloc(locator<DisplayUsecase>()));
 
-  locator.registerFactory(() => ViewModuleBloc(locator<DisplayUsecase>()));
+  // locator.registerFactory(() => ViewModuleBloc(locator<DisplayUsecase>()));
 }

@@ -7,7 +7,10 @@ import 'package:e_commerce/domain/model/display/menu/menu.model.dart';
 import 'package:e_commerce/domain/model/display/view_module/viee_module.model.dart';
 import 'package:e_commerce/domain/repository/display.repository.dart';
 import 'package:e_commerce/presentation/screens/main/cubit/mall_type_cubit.dart';
+import 'package:injectable/injectable.dart';
 
+// 추상화 클래스와 구현 클래스 바인딩
+@Singleton(as: DisplayRepository)
 class DisplayRepositoryImpl implements DisplayRepository {
   DisplayRepositoryImpl(this._displayApi);
 

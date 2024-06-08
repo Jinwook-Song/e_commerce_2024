@@ -1,11 +1,12 @@
 import 'package:e_commerce/core/theme/theme_data.dart';
+import 'package:e_commerce/dependency_injection.dart';
 import 'package:e_commerce/presentation/routes/router.dart';
-import 'package:e_commerce/service_locator.dart';
 import 'package:flutter/material.dart';
 
 Future<void> main() async {
-  setLocator();
+  // setLocator();
 
+  configureDependencies();
   runApp(const MainApp());
 }
 

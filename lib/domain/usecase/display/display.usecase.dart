@@ -1,6 +1,8 @@
 import 'package:e_commerce/domain/repository/display.repository.dart';
 import 'package:e_commerce/domain/usecase/base/remote.usecase.dart';
+import 'package:injectable/injectable.dart';
 
+@singleton
 class DisplayUsecase {
   DisplayUsecase(this._displayRepository);
 
