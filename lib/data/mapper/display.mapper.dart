@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:e_commerce/data/dto/display/display.dto.dart';
 import 'package:e_commerce/data/dto/display/product_info/product_info.dto.dart';
 import 'package:e_commerce/domain/model/display/display.model.dart';

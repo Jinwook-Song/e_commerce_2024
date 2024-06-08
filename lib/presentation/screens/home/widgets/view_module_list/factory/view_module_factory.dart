@@ -1,5 +1,6 @@
 import 'package:e_commerce/core/utils/extensions.dart';
 import 'package:e_commerce/domain/model/display/display.model.dart';
+import 'package:e_commerce/presentation/screens/home/widgets/view_module_list/carousel.view_module.dart';
 import 'package:e_commerce/presentation/screens/home/widgets/view_module_list/factory/view_module_widget.dart';
 import 'package:e_commerce/presentation/screens/home/widgets/view_module_list/view_module_A.dart';
 import 'package:e_commerce/presentation/screens/home/widgets/view_module_list/view_module_B.dart';
@@ -15,6 +16,7 @@ enum Modules {
   viewModuleC,
   viewModuleD,
   viewModuleE,
+  carouselViewModule
 }
 
 class ViewModuleFactory {
@@ -44,6 +46,8 @@ extension ModulesEx on Modules {
         return const ViewModuleD();
       case Modules.viewModuleE:
         return const ViewModuleE();
+      case Modules.carouselViewModule:
+        return CarouselViewModlue(info);
     }
   }
 }
