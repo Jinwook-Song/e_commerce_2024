@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ViewModuleList extends StatefulWidget {
-  const ViewModuleList({super.key});
+  final int tabId;
+
+  const ViewModuleList({super.key, required this.tabId});
 
   @override
   State<ViewModuleList> createState() => _ViewModuleListState();
@@ -44,49 +46,24 @@ class _ViewModuleListState extends State<ViewModuleList> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ViewModuleBloc, ViewModuleState>(
-      builder: (context, state) {
-        return (state.status.isInitial || state.viewModules.isEmpty)
-            ? const LoadingWidget()
-            : ListView(
-                controller: _scrollController,
-                children: [
-                  ...state.viewModules,
-                  if (state.status.isLoading)
-                    const LoadingWidget(isBottom: true),
-                ],
-              );
-        // switch (state.status) {
-        //   case Status.initial:
-        //   case Status.loading:
-        //     return const Center(
-        //       child: CircularProgressIndicator.adaptive(),
-        //     );
-        //   case Status.error:
-        //     return const Center(
-        //       child: Text('Error'),
-        //     );
-        //   case Status.success:
-        //     return Column(
-        //       children: [
-        //         Container(
-        //           height: 50,
-        //           color: Colors.deepOrangeAccent,
-        //           child: Center(
-        //             child: Text(state.tabId.toString()),
-        //           ),
-        //         ),
-        //         Expanded(
-        //           child: ListView.separated(
-        //             itemCount: state.viewModules.length,
-        //             separatorBuilder: (context, index) => const Divider(),
-        //             itemBuilder: (context, index) => state.viewModules[index],
-        //           ),
-        //         ),
-        //       ],
-        //     );
-        // }
-      },
+    return RefreshIndicator(
+      onRefresh: () async => context
+          .read<ViewModuleBloc>()
+          .add(ViewModuleInitialized(widget.tabId, isRefresh: true)),
+      child: BlocBuilder<ViewModuleBloc, ViewModuleState>(
+        builder: (context, state) {
+          return (state.status.isInitial || state.viewModules.isEmpty)
+              ? const LoadingWidget()
+              : ListView(
+                  controller: _scrollController,
+                  children: [
+                    ...state.viewModules,
+                    if (state.status.isLoading)
+                      const LoadingWidget(isBottom: true),
+                  ],
+                );
+        },
+      ),
     );
   }
 }

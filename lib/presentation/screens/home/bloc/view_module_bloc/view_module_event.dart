@@ -6,7 +6,8 @@ abstract class ViewModuleEvent {
 
 class ViewModuleInitialized extends ViewModuleEvent {
   final int tabId;
-  ViewModuleInitialized(this.tabId);
+  final bool isRefresh;
+  ViewModuleInitialized(this.tabId, {this.isRefresh = false});
 }
 
 class ViewModuleFetched extends ViewModuleEvent {
