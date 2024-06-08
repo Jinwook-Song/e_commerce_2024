@@ -1,3 +1,4 @@
+import 'package:e_commerce/domain/model/display/product_info/product_info.model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'viee_module.model.freezed.dart';
@@ -10,6 +11,7 @@ class ViewModule with _$ViewModule {
     required String title,
     required String subtitle,
     required String imageUrl,
+    required List<ProductInfo> products,
   }) = _ViewModule;
 
   factory ViewModule.fromJson(Map<String, dynamic> json) =>
