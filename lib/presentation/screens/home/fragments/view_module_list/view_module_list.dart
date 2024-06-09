@@ -38,7 +38,6 @@ class _ViewModuleListState extends State<ViewModuleList> {
   }
 
   void _onScroll() {
-    logging(_isEndScroll);
     if (_isEndScroll) {
       context.read<ViewModuleBloc>().add(ViewModuleFetched());
     }
