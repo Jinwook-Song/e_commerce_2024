@@ -1,7 +1,7 @@
 import 'package:e_commerce/dependency_injection.dart';
 import 'package:e_commerce/domain/model/display/menu/menu.model.dart';
 import 'package:e_commerce/presentation/screens/home/bloc/view_module_bloc/view_module_bloc.dart';
-import 'package:e_commerce/presentation/screens/home/widgets/view_module_list/view_module_list.dart';
+import 'package:e_commerce/presentation/screens/home/fragments/view_module_list/view_module_list.dart';
 import 'package:e_commerce/presentation/screens/main/cubit/mall_type_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

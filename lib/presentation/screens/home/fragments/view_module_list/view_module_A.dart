@@ -1,4 +1,4 @@
-import 'package:e_commerce/presentation/screens/home/widgets/view_module_list/factory/view_module_widget.dart';
+import 'package:e_commerce/presentation/screens/home/fragments/view_module_list/factory/view_module_widget.dart';
 import 'package:flutter/material.dart';
 
 class ViewModuleB extends StatelessWidget with ViewModuleWidget {

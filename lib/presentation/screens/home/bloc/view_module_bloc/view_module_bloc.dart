@@ -7,7 +7,7 @@ import 'package:e_commerce/domain/model/common/result.dart';
 import 'package:e_commerce/domain/model/display/display.model.dart';
 import 'package:e_commerce/domain/usecase/display/display.usecase.dart';
 import 'package:e_commerce/domain/usecase/display/view_module/get_view_modules.usecase.dart';
-import 'package:e_commerce/presentation/screens/home/widgets/view_module_list/factory/view_module_factory.dart';
+import 'package:e_commerce/presentation/screens/home/fragments/view_module_list/factory/view_module_factory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

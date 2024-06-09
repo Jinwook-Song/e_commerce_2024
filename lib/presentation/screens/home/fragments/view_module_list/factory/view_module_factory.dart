@@ -1,14 +1,15 @@
 import 'package:e_commerce/core/utils/extensions.dart';
 import 'package:e_commerce/domain/model/display/display.model.dart';
-import 'package:e_commerce/presentation/screens/home/widgets/view_module_list/banner.view_module.dart';
-import 'package:e_commerce/presentation/screens/home/widgets/view_module_list/carousel.view_module.dart';
-import 'package:e_commerce/presentation/screens/home/widgets/view_module_list/factory/view_module_widget.dart';
-import 'package:e_commerce/presentation/screens/home/widgets/view_module_list/view_module_A.dart';
-import 'package:e_commerce/presentation/screens/home/widgets/view_module_list/view_module_B.dart';
-import 'package:e_commerce/presentation/screens/home/widgets/view_module_list/view_module_C.dart';
-import 'package:e_commerce/presentation/screens/home/widgets/view_module_list/view_module_D.dart';
-import 'package:e_commerce/presentation/screens/home/widgets/view_module_list/view_module_E.dart';
-import 'package:e_commerce/presentation/screens/home/widgets/view_module_list/view_module_NONE.dart';
+import 'package:e_commerce/presentation/screens/home/fragments/view_module_list/banner.view_module.dart';
+import 'package:e_commerce/presentation/screens/home/fragments/view_module_list/carousel.view_module.dart';
+import 'package:e_commerce/presentation/screens/home/fragments/view_module_list/factory/view_module_widget.dart';
+import 'package:e_commerce/presentation/screens/home/fragments/view_module_list/scroll.view_module.dart';
+import 'package:e_commerce/presentation/screens/home/fragments/view_module_list/view_module_A.dart';
+import 'package:e_commerce/presentation/screens/home/fragments/view_module_list/view_module_B.dart';
+import 'package:e_commerce/presentation/screens/home/fragments/view_module_list/view_module_C.dart';
+import 'package:e_commerce/presentation/screens/home/fragments/view_module_list/view_module_D.dart';
+import 'package:e_commerce/presentation/screens/home/fragments/view_module_list/view_module_E.dart';
+import 'package:e_commerce/presentation/screens/home/fragments/view_module_list/view_module_NONE.dart';
 import 'package:flutter/material.dart';
 
 enum Modules {
@@ -18,7 +19,8 @@ enum Modules {
   viewModuleD,
   viewModuleE,
   carouselViewModule,
-  bannerViewModule
+  bannerViewModule,
+  scrollViewModule
 }
 
 class ViewModuleFactory {
@@ -52,6 +54,8 @@ extension ModulesEx on Modules {
         return CarouselViewModlue(info);
       case Modules.bannerViewModule:
         return BannerViewModule(info);
+      case Modules.scrollViewModule:
+        return ScrollViewModule(info);
     }
   }
 }

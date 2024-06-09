@@ -1,5 +1,5 @@
 import 'package:e_commerce/domain/model/display/display.model.dart';
-import 'package:e_commerce/presentation/screens/home/widgets/view_module_list/factory/view_module_widget.dart';
+import 'package:e_commerce/presentation/screens/home/fragments/view_module_list/factory/view_module_widget.dart';
 import 'package:flutter/material.dart';
 
 class BannerViewModule extends StatelessWidget with ViewModuleWidget {

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:e_commerce/core/theme/constant/app_colors.dart';
 import 'package:e_commerce/domain/model/display/display.model.dart';
 import 'package:e_commerce/domain/model/display/product_info/product_info.model.dart';
-import 'package:e_commerce/presentation/screens/home/widgets/view_module_list/factory/view_module_widget.dart';
+import 'package:e_commerce/presentation/screens/home/fragments/view_module_list/factory/view_module_widget.dart';
 import 'package:flutter/material.dart';
 
 class CarouselViewModlue extends StatefulWidget with ViewModuleWidget {
