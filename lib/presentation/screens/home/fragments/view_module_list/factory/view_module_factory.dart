@@ -4,6 +4,7 @@ import 'package:e_commerce/presentation/screens/home/fragments/view_module_list/
 import 'package:e_commerce/presentation/screens/home/fragments/view_module_list/carousel.view_module.dart';
 import 'package:e_commerce/presentation/screens/home/fragments/view_module_list/factory/view_module_widget.dart';
 import 'package:e_commerce/presentation/screens/home/fragments/view_module_list/scroll.view_module.dart';
+import 'package:e_commerce/presentation/screens/home/fragments/view_module_list/special_price.view_module.dart';
 import 'package:e_commerce/presentation/screens/home/fragments/view_module_list/view_module_A.dart';
 import 'package:e_commerce/presentation/screens/home/fragments/view_module_list/view_module_B.dart';
 import 'package:e_commerce/presentation/screens/home/fragments/view_module_list/view_module_C.dart';
@@ -20,7 +21,8 @@ enum Modules {
   viewModuleE,
   carouselViewModule,
   bannerViewModule,
-  scrollViewModule
+  scrollViewModule,
+  specialPriceViewModule,
 }
 
 class ViewModuleFactory {
@@ -56,6 +58,8 @@ extension ModulesEx on Modules {
         return BannerViewModule(info);
       case Modules.scrollViewModule:
         return ScrollViewModule(info);
+      case Modules.specialPriceViewModule:
+        return SpecialPriceViewModule(info);
     }
   }
 }
