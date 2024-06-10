@@ -28,7 +28,7 @@ class SmallProductCard extends ProductCard {
     super.key,
     required super.productInfo,
   }) : super(
-          imageAspectRatio: 114 / 152,
+          imageAspectRatio: 114 / 145,
           needShowReviewCount: false,
           titleStyle: Theme.of(context).textTheme.labelMedium,
           priceStyle: Theme.of(context).textTheme.labelMedium,
