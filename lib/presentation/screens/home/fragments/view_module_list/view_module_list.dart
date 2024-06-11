@@ -1,6 +1,7 @@
 import 'package:e_commerce/core/utils/extensions.dart';
 import 'package:e_commerce/core/utils/logging.dart';
 import 'package:e_commerce/presentation/screens/home/bloc/view_module_bloc/view_module_bloc.dart';
+import 'package:e_commerce/presentation/screens/home/fragments/footer/footer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -59,6 +60,7 @@ class _ViewModuleListState extends State<ViewModuleList> {
                     ...state.viewModules,
                     if (state.status.isLoading)
                       const LoadingWidget(isBottom: true),
+                    const Footer(),
                   ],
                 );
         },
