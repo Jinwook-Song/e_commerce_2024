@@ -16,5 +16,5 @@ class CartOpened extends CartEvent {
   final ProductInfo productInfo;
   final int quantity;
 
-  const CartOpened(this.productInfo, {required this.quantity});
+  const CartOpened(this.productInfo, {this.quantity = 1});
 }

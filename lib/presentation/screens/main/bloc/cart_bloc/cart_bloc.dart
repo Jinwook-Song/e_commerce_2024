@@ -4,11 +4,13 @@ import 'package:e_commerce/core/utils/logging.dart';
 import 'package:e_commerce/domain/model/display/product_info/product_info.model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
 
 part 'cart_event.dart';
 part 'cart_state.dart';
 part 'cart_bloc.freezed.dart';
 
+@injectable
 class CartBloc extends Bloc<CartEvent, CartState> {
   CartBloc() : super(const CartState()) {
     on<CartInitialized>(_onCartInitialized);
@@ -60,5 +62,11 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         ),
       );
     }
+  }
+
+  @override
+  void onChange(Change<CartState> change) {
+    super.onChange(change);
+    logging([change.currentState.status, change.nextState.status]);
   }
 }

@@ -41,7 +41,7 @@ class ProductCard extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            const AddCartButton(),
+            AddCartButton(productInfo),
           ],
         ),
         const Gap(9),
