@@ -1,4 +1,6 @@
 import 'package:e_commerce/core/theme/theme_data.dart';
+import 'package:e_commerce/data/entity/cart/cart.entity.dart';
+import 'package:e_commerce/data/entity/product_info/product_info.entity.dart';
 import 'package:e_commerce/dependency_injection.dart';
 import 'package:e_commerce/presentation/routes/router.dart';
 import 'package:e_commerce/presentation/screens/main/bloc/cart_bloc/cart_bloc.dart';
@@ -9,6 +11,9 @@ import 'package:hive_flutter/hive_flutter.dart';
 Future<void> main() async {
   // Hive 초기화
   await Hive.initFlutter();
+
+  Hive.registerAdapter(ProductInfoEntityAdapter());
+  Hive.registerAdapter(CartEntityAdapter());
   configureDependencies();
   runApp(const MainApp());
 }
