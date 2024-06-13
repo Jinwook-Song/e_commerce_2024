@@ -1,5 +1,7 @@
+import 'package:e_commerce/core/utils/bottom_sheet/cart_bottom_sheet.dart';
 import 'package:e_commerce/presentation/screens/category/category_screen.dart';
 import 'package:e_commerce/presentation/screens/home/home_screen.dart';
+import 'package:e_commerce/presentation/screens/main/bloc/cart_bloc/cart_bloc.dart';
 import 'package:e_commerce/presentation/screens/main/cubit/bottom_nav_cubit.dart';
 import 'package:e_commerce/presentation/screens/main/cubit/mall_type_cubit.dart';
 import 'package:e_commerce/presentation/screens/main/widgets/top_app_bar/top_app_bar.dart';
@@ -31,19 +33,28 @@ class MainScreenView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const TopAppBar(),
-      body: BlocBuilder<BottomNavCubit, BottonNav>(
-        builder: (_, state) {
-          switch (state) {
-            case BottonNav.home:
-              return const HomeScreen();
-            case BottonNav.category:
-              return const CategoryScreen();
-            case BottonNav.search:
-              return const SearchScreen();
-            case BottonNav.user:
-              return const UserScreen();
-          }
+      body: BlocListener<CartBloc, CartState>(
+        listener: (context, state) {
+          cartBottomSheet(context).whenComplete(
+            () => context.read<CartBloc>().add(const CartClosed()),
+          );
         },
+        listenWhen: (previous, current) =>
+            previous.status.isClose && current.status.isOpen,
+        child: BlocBuilder<BottomNavCubit, BottonNav>(
+          builder: (_, state) {
+            switch (state) {
+              case BottonNav.home:
+                return const HomeScreen();
+              case BottonNav.category:
+                return const CategoryScreen();
+              case BottonNav.search:
+                return const SearchScreen();
+              case BottonNav.user:
+                return const UserScreen();
+            }
+          },
+        ),
       ),
       bottomNavigationBar: BlocBuilder<BottomNavCubit, BottonNav>(
         builder: (_, state) {
