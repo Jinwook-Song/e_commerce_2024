@@ -59,13 +59,17 @@ class CartPriceInfo extends StatelessWidget {
                       color: (state.quantity != 1)
                           ? Theme.of(context).colorScheme.contentPrimary
                           : Theme.of(context).colorScheme.contentFourth,
-                      onPressed: () {},
+                      onPressed: () => context
+                          .read<CartBloc>()
+                          .add(const CartQuantityDecreased()),
                     ),
                     Text('${state.quantity}'),
                     SvgIconButton(
                       icon: AppIcons.add,
                       color: Theme.of(context).colorScheme.contentPrimary,
-                      onPressed: () {},
+                      onPressed: () => context
+                          .read<CartBloc>()
+                          .add(const CartQuantityIncreased()),
                     ),
                   ],
                 ),

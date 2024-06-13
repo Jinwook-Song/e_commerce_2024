@@ -18,3 +18,11 @@ class CartOpened extends CartEvent {
 
   const CartOpened(this.productInfo, {this.quantity = 1});
 }
+
+class CartQuantityIncreased extends CartEvent {
+  const CartQuantityIncreased();
+}
+
+class CartQuantityDecreased extends CartEvent {
+  const CartQuantityDecreased();
+}
