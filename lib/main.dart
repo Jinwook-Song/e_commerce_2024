@@ -4,10 +4,11 @@ import 'package:e_commerce/presentation/routes/router.dart';
 import 'package:e_commerce/presentation/screens/main/bloc/cart_bloc/cart_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 Future<void> main() async {
-  // setLocator();
-
+  // Hive 초기화
+  await Hive.initFlutter();
   configureDependencies();
   runApp(const MainApp());
 }
