@@ -3,6 +3,7 @@ import 'package:e_commerce/data/dto/common/response_wrapper/response_wrapper.dar
 import 'package:e_commerce/data/dto/display/display.dto.dart';
 import 'package:e_commerce/data/mapper/common.mapper.dart';
 import 'package:e_commerce/data/mapper/display.mapper.dart';
+import 'package:e_commerce/domain/model/display/cart/cart.model.dart';
 import 'package:e_commerce/domain/model/display/menu/menu.model.dart';
 import 'package:e_commerce/domain/model/display/view_module/viee_module.model.dart';
 import 'package:e_commerce/domain/repository/display.repository.dart';
@@ -45,5 +46,37 @@ class DisplayRepositoryImpl implements DisplayRepository {
       apiCall: () => _displayApi.getViewModulesByTabId(tabId, page),
       fromDto: (dto) => dto.toModel(),
     );
+  }
+
+  @override
+  Future<ResponseWrapper<List<Cart>>> addCart({required Cart cart}) {
+    // TODO: implement addCart
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<ResponseWrapper<List<Cart>>> changeCartQuantityByProductId(
+      {required String productId, required int quantity}) {
+    // TODO: implement changeCartQuantityByProductId
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<ResponseWrapper<List<Cart>>> clearCartList() {
+    // TODO: implement clearCartList
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<ResponseWrapper<List<Cart>>> deleteCartList(
+      {required List<String> productIds}) {
+    // TODO: implement deleteCartList
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<ResponseWrapper<List<Cart>>> getCartList() {
+    // TODO: implement getCartList
+    throw UnimplementedError();
   }
 }
