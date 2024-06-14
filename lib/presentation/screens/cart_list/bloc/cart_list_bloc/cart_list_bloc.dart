@@ -28,13 +28,13 @@ class CartListBloc extends Bloc<CartListEvent, CartListState> {
   Future<void> _onCartListInitialized(_, Emitter<CartListState> emit) async {
     emit(state.copyWith(status: Status.loading));
     try {
-      final response = await _displayUsecase.execute<Result<List<Cart>>>(
+      final response = await _displayUsecase.execute<Result<List<Cart>?>>(
         usecase: GetCartListUsecase(),
       );
       response.when(
         success: (cartList) {
           final selectedProducts =
-              cartList.map((e) => e.product.productId).toList();
+              cartList!.map((e) => e.product.productId).toList();
 
           final totalPrice = _calTotalPrice(selectedProducts, cartList);
           emit(
@@ -68,7 +68,7 @@ class CartListBloc extends Bloc<CartListEvent, CartListState> {
     emit(state.copyWith(status: Status.loading));
     final cart = Cart(quantity: event.quantity, product: event.productInfo);
     try {
-      final response = await _displayUsecase.execute<Result<List<Cart>>>(
+      final response = await _displayUsecase.execute<Result<List<Cart>?>>(
         usecase: AddCartListUsecase(cart),
       );
 
@@ -79,7 +79,7 @@ class CartListBloc extends Bloc<CartListEvent, CartListState> {
           if (selectedProducts.indexWhere((e) => e == productId) == -1) {
             selectedProducts.add(productId);
           }
-          final totalPrice = _calTotalPrice(selectedProducts, cartList);
+          final totalPrice = _calTotalPrice(selectedProducts, cartList!);
           emit(
             state.copyWith(
               status: Status.success,

@@ -3,6 +3,7 @@ import 'package:e_commerce/data/entity/cart/cart.entity.dart';
 import 'package:e_commerce/data/entity/product_info/product_info.entity.dart';
 import 'package:e_commerce/dependency_injection.dart';
 import 'package:e_commerce/presentation/routes/router.dart';
+import 'package:e_commerce/presentation/screens/cart_list/bloc/cart_list_bloc/cart_list_bloc.dart';
 import 'package:e_commerce/presentation/screens/main/bloc/cart_bloc/cart_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,6 +29,12 @@ class MainApp extends StatelessWidget {
         BlocProvider(
           create: (context) {
             return getIt<CartBloc>()..add(const CartInitialized());
+          },
+        ),
+        BlocProvider(
+          lazy: false, // 사용되기 전에 생성이 되도록
+          create: (context) {
+            return getIt<CartListBloc>()..add(const CartListInitialized());
           },
         ),
       ],
