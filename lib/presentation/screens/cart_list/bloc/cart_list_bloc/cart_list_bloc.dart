@@ -5,8 +5,7 @@ import 'package:e_commerce/core/utils/logging.dart';
 import 'package:e_commerce/domain/model/common/result.dart';
 import 'package:e_commerce/domain/model/display/cart/cart.model.dart';
 import 'package:e_commerce/domain/model/display/product_info/product_info.model.dart';
-import 'package:e_commerce/domain/usecase/display/cart/add_cart_list.usecase.dart';
-import 'package:e_commerce/domain/usecase/display/cart/get_cart_list.usecase.dart';
+import 'package:e_commerce/domain/usecase/display/cart/cart.usecase.dart';
 import 'package:e_commerce/domain/usecase/display/display.usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -23,6 +22,10 @@ class CartListBloc extends Bloc<CartListEvent, CartListState> {
   CartListBloc(this._displayUsecase) : super(CartListState()) {
     on<CartListInitialized>(_onCartListInitialized);
     on<CartListAdded>(_onCartListAdded);
+    on<CartListSelected>(_onCartSelected);
+    on<CartListSelectedAll>(_onCartSelectedAll);
+    on<CartListQtyIncreased>(_onCartQtyIncreased);
+    on<CartListQtyDecreased>(_onCartQtyDecreased);
   }
 
   Future<void> _onCartListInitialized(_, Emitter<CartListState> emit) async {
@@ -85,6 +88,154 @@ class CartListBloc extends Bloc<CartListEvent, CartListState> {
               status: Status.success,
               cartList: cartList,
               selectedProduct: selectedProducts,
+              totalPrice: totalPrice,
+            ),
+          );
+        },
+        failure: (error) {
+          emit(state.copyWith(status: Status.error, error: error));
+        },
+      );
+    } catch (error) {
+      logging(error, logType: LogType.error);
+
+      emit(
+        state.copyWith(
+          status: Status.error,
+          error: CommonException.setError(error),
+        ),
+      );
+    }
+  }
+
+  void _onCartSelected(
+    CartListSelected event,
+    Emitter<CartListState> emit,
+  ) {
+    try {
+      final String productId = event.cart.product.productId;
+      final selectedProducts = [...state.selectedProduct];
+      final int selectedIdx =
+          state.selectedProduct.indexWhere((element) => element == productId);
+      if (selectedIdx == -1) {
+        selectedProducts.add(productId);
+      } else {
+        selectedProducts.removeAt(selectedIdx);
+      }
+
+      final totalPrice = _calTotalPrice(selectedProducts, state.cartList);
+
+      emit(
+        state.copyWith(
+          selectedProduct: selectedProducts,
+          totalPrice: totalPrice,
+        ),
+      );
+    } catch (error) {
+      logging(error, logType: LogType.error);
+      emit(
+        state.copyWith(
+          status: Status.error,
+          error: CommonException.setError(error),
+        ),
+      );
+    }
+  }
+
+  void _onCartSelectedAll(
+    CartListSelectedAll event,
+    Emitter<CartListState> emit,
+  ) {
+    try {
+      // 이미 전체 선택이 되어있는 경우 -> 모두 지움
+
+      if (state.selectedProduct.length == state.cartList.length) {
+        final totalPrice = _calTotalPrice([], state.cartList);
+        emit(state.copyWith(selectedProduct: [], totalPrice: totalPrice));
+
+        return;
+      }
+
+      final selectedProducts =
+          state.cartList.map((e) => e.product.productId).toList();
+      final totalPrice = _calTotalPrice(selectedProducts, state.cartList);
+
+      emit(
+        state.copyWith(
+          selectedProduct: selectedProducts,
+          totalPrice: totalPrice,
+        ),
+      );
+    } catch (error) {
+      logging(error, logType: LogType.error);
+      emit(
+        state.copyWith(
+          status: Status.error,
+          error: CommonException.setError(error),
+        ),
+      );
+    }
+  }
+
+  Future<void> _onCartQtyIncreased(
+    CartListQtyIncreased event,
+    Emitter<CartListState> emit,
+  ) async {
+    try {
+      final productId = event.cart.product.productId;
+      final qty = event.cart.quantity + 1;
+      final response = await _displayUsecase.execute<Result<List<Cart>?>>(
+        usecase: ChangeCartQtyUsecase(productId, qty),
+      );
+
+      response.when(
+        success: (data) {
+          final List<Cart> cartList = [...data!];
+
+          final totalPrice = _calTotalPrice(state.selectedProduct, cartList);
+          emit(
+            state.copyWith(
+              status: Status.success,
+              cartList: cartList,
+              totalPrice: totalPrice,
+            ),
+          );
+        },
+        failure: (error) {
+          emit(state.copyWith(status: Status.error, error: error));
+        },
+      );
+    } catch (error) {
+      logging(error, logType: LogType.error);
+      emit(
+        state.copyWith(
+          status: Status.error,
+          error: CommonException.setError(error),
+        ),
+      );
+    }
+  }
+
+  Future<void> _onCartQtyDecreased(
+    CartListQtyDecreased event,
+    Emitter<CartListState> emit,
+  ) async {
+    try {
+      final productId = event.cart.product.productId;
+      final qty = event.cart.quantity - 1;
+      if (qty < 1) return;
+      final response = await _displayUsecase.execute<Result<List<Cart>?>>(
+        usecase: ChangeCartQtyUsecase(productId, qty),
+      );
+      response.when(
+        success: (data) {
+          final List<Cart> cartList = [...data!];
+
+          final totalPrice = _calTotalPrice(state.selectedProduct, cartList);
+          emit(
+            state.copyWith(
+              status: Status.success,
+              cartList: cartList,
               totalPrice: totalPrice,
             ),
           );
