@@ -1,3 +1,4 @@
+import 'package:e_commerce/data/data_source/local/display.dao.dart';
 import 'package:e_commerce/data/data_source/mock/display/display.mock_api.dart';
 import 'package:e_commerce/data/data_source/remote/display.api.dart';
 import 'package:injectable/injectable.dart';
@@ -6,4 +7,7 @@ import 'package:injectable/injectable.dart';
 abstract class DataSourceModule {
   @singleton
   DisplayApi get displayApi => DisplayMockApi();
+
+  @singleton
+  DisplayDao get displayDao => DisplayDao();
 }

@@ -18,7 +18,7 @@ class DisplayDao {
   }
 
   /// 장바구니 상품 담기
-  Future<ResponseWrapper<bool>> insertCart(CartEntity cart) async {
+  Future<ResponseWrapper<List<CartEntity>>> insertCart(CartEntity cart) async {
     final localStorage = await Hive.openBox<CartEntity>(_cartDb);
     final productId = cart.product.productId;
     // 이미 장바구니에 존재하는 상품
@@ -31,16 +31,16 @@ class DisplayDao {
         status: status,
         code: code,
         message: message,
-        data: false,
+        data: localStorage.values.toList(),
       );
     }
     await localStorage.put(productId, cart);
 
-    return const ResponseWrapper(
+    return ResponseWrapper(
       status: 'SUCCESS',
       code: '0000',
       message: '장바구니 담기 성공',
-      data: true,
+      data: localStorage.values.toList(),
     );
   }
 

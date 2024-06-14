@@ -23,7 +23,7 @@ abstract class DisplayRepository extends Repository {
   });
 
   /// ProductId로 장바구니 삭제하기
-  Future<ResponseWrapper<List<Cart>>> deleteCartList({
+  Future<ResponseWrapper<List<Cart>>> deleteCartByProductId({
     required List<String> productIds,
   });
 

@@ -1,6 +1,8 @@
+import 'package:e_commerce/data/data_source/local/display.dao.dart';
 import 'package:e_commerce/data/data_source/remote/display.api.dart';
 import 'package:e_commerce/data/dto/common/response_wrapper/response_wrapper.dart';
 import 'package:e_commerce/data/dto/display/display.dto.dart';
+import 'package:e_commerce/data/entity/cart/cart.entity.dart';
 import 'package:e_commerce/data/mapper/common.mapper.dart';
 import 'package:e_commerce/data/mapper/display.mapper.dart';
 import 'package:e_commerce/domain/model/display/cart/cart.model.dart';
@@ -13,17 +15,18 @@ import 'package:injectable/injectable.dart';
 // 추상화 클래스와 구현 클래스 바인딩
 @Singleton(as: DisplayRepository)
 class DisplayRepositoryImpl implements DisplayRepository {
-  DisplayRepositoryImpl(this._displayApi);
-
   final DisplayApi _displayApi;
+  final DisplayDao _displayDao;
 
-  Future<ResponseWrapper<List<Model>>> _getData<Model, Dto>({
-    required Future<ResponseWrapper<List<Dto>>> Function() apiCall,
-    required Model Function(Dto) fromDto,
+  DisplayRepositoryImpl(this._displayApi, this._displayDao);
+
+  Future<ResponseWrapper<List<Model>>> _getData<Model, Data>({
+    required Future<ResponseWrapper<List<Data>>> Function() apiCall,
+    required Model Function(Data) fromData,
   }) async {
     final response = await apiCall();
     return response.toModel(
-      response.data?.map(fromDto).toList() ?? [],
+      response.data?.map(fromData).toList() ?? [],
     );
   }
 
@@ -33,7 +36,7 @@ class DisplayRepositoryImpl implements DisplayRepository {
   }) async {
     return _getData<Menu, MenuDto>(
       apiCall: () => _displayApi.getMenusByMallType(mallType.name),
-      fromDto: (dto) => dto.toModel(),
+      fromData: (dto) => dto.toModel(),
     );
   }
 
@@ -44,39 +47,55 @@ class DisplayRepositoryImpl implements DisplayRepository {
   }) async {
     return _getData<ViewModule, ViewModuleDto>(
       apiCall: () => _displayApi.getViewModulesByTabId(tabId, page),
-      fromDto: (dto) => dto.toModel(),
+      fromData: (dto) => dto.toModel(),
+    );
+  }
+
+  @override
+  Future<ResponseWrapper<List<Cart>>> getCartList() async {
+    return _getData<Cart, CartEntity>(
+      apiCall: () => _displayDao.getCartList(),
+      fromData: (entity) => entity.toModel(),
     );
   }
 
   @override
   Future<ResponseWrapper<List<Cart>>> addCart({required Cart cart}) {
-    // TODO: implement addCart
-    throw UnimplementedError();
+    return _getData<Cart, CartEntity>(
+      apiCall: () => _displayDao.insertCart(cart.toEntity()),
+      fromData: (entity) => entity.toModel(),
+    );
   }
 
   @override
-  Future<ResponseWrapper<List<Cart>>> changeCartQuantityByProductId(
-      {required String productId, required int quantity}) {
-    // TODO: implement changeCartQuantityByProductId
-    throw UnimplementedError();
+  Future<ResponseWrapper<List<Cart>>> deleteCartByProductId({
+    required List<String> productIds,
+  }) {
+    return _getData<Cart, CartEntity>(
+      apiCall: () => _displayDao.deleteCart(productIds),
+      fromData: (entity) => entity.toModel(),
+    );
   }
 
   @override
   Future<ResponseWrapper<List<Cart>>> clearCartList() {
-    // TODO: implement clearCartList
-    throw UnimplementedError();
+    return _getData<Cart, CartEntity>(
+      apiCall: () => _displayDao.clearCarts(),
+      fromData: (entity) => entity.toModel(),
+    );
   }
 
   @override
-  Future<ResponseWrapper<List<Cart>>> deleteCartList(
-      {required List<String> productIds}) {
-    // TODO: implement deleteCartList
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<ResponseWrapper<List<Cart>>> getCartList() {
-    // TODO: implement getCartList
-    throw UnimplementedError();
+  Future<ResponseWrapper<List<Cart>>> changeCartQuantityByProductId({
+    required String productId,
+    required int quantity,
+  }) {
+    return _getData<Cart, CartEntity>(
+      apiCall: () => _displayDao.changeQtyCart(
+        productId: productId,
+        quantity: quantity,
+      ),
+      fromData: (entity) => entity.toModel(),
+    );
   }
 }
