@@ -8,7 +8,7 @@ class DisplayUsecase {
 
   final DisplayRepository _displayRepository;
 
-  Future execute<T>({required Useecase usecase}) async {
+  Future<T> execute<T>({required Useecase usecase}) async {
     return await usecase.call(_displayRepository);
   }
 }

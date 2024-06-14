@@ -8,13 +8,15 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:e_commerce/data/data_source/data_source_module.dart' as _i11;
+import 'package:e_commerce/data/data_source/data_source_module.dart' as _i12;
 import 'package:e_commerce/data/data_source/local/display.dao.dart' as _i5;
 import 'package:e_commerce/data/data_source/remote/display.api.dart' as _i4;
 import 'package:e_commerce/data/repository_impl/display_repository_impl.dart'
     as _i7;
 import 'package:e_commerce/domain/repository/display.repository.dart' as _i6;
 import 'package:e_commerce/domain/usecase/display/display.usecase.dart' as _i8;
+import 'package:e_commerce/presentation/screens/cart_list/bloc/cart_list_bloc/cart_list_bloc.dart'
+    as _i11;
 import 'package:e_commerce/presentation/screens/home/bloc/menu_bloc/menu_bloc.dart'
     as _i9;
 import 'package:e_commerce/presentation/screens/home/bloc/view_module_bloc/view_module_bloc.dart'
@@ -48,8 +50,10 @@ extension GetItInjectableX on _i1.GetIt {
     gh.factory<_i9.MenuBloc>(() => _i9.MenuBloc(gh<_i8.DisplayUsecase>()));
     gh.factory<_i10.ViewModuleBloc>(
         () => _i10.ViewModuleBloc(gh<_i8.DisplayUsecase>()));
+    gh.factory<_i11.CartListBloc>(
+        () => _i11.CartListBloc(gh<_i8.DisplayUsecase>()));
     return this;
   }
 }
 
-class _$DataSourceModule extends _i11.DataSourceModule {}
+class _$DataSourceModule extends _i12.DataSourceModule {}
