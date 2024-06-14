@@ -1,3 +1,4 @@
+import 'package:e_commerce/data/data_source/local/display.dao.dart';
 import 'package:e_commerce/data/data_source/mock/display/display.mock_api.dart';
 import 'package:e_commerce/data/data_source/remote/display.api.dart';
 import 'package:e_commerce/data/dto/common/response_wrapper/response_wrapper.dart';
@@ -16,10 +17,12 @@ class MockDisplayApi extends Mock implements DisplayApi {}
 void main() {
   late DisplayRepository displayRepository;
   late DisplayApi displayApi;
+  late DisplayDao displayDao;
 
   setUpAll(() {
     displayApi = MockDisplayApi();
-    displayRepository = DisplayRepositoryImpl(displayApi);
+    displayDao = DisplayDao();
+    displayRepository = DisplayRepositoryImpl(displayApi, displayDao);
   });
 
   test('의존성 주입 및 객체 생성 완료', () => expect(displayRepository, isNotNull));

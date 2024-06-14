@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:e_commerce/core/utils/error/error_response.dart';
+import 'package:e_commerce/data/data_source/local/display.dao.dart';
 import 'package:e_commerce/data/data_source/remote/display.api.dart';
 import 'package:e_commerce/data/repository_impl/display_repository_impl.dart';
 import 'package:e_commerce/domain/model/common/result.dart';
@@ -24,7 +25,7 @@ void main() {
     late DisplayUsecase displayUsecase;
 
     setUp(() {
-      displayRepository = DisplayRepositoryImpl(MockDisplayApi());
+      displayRepository = DisplayRepositoryImpl(MockDisplayApi(), DisplayDao());
       displayUsecase = DisplayUsecase(displayRepository);
     });
 
