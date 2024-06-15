@@ -12,4 +12,6 @@ class Routes {
   static const splash = RouteModel(path: '/splash', name: 'Splash');
 
   static const main = RouteModel(path: '/', name: 'Main');
+
+  static const cartList = RouteModel(path: '/cart-list', name: 'Cart List');
 }

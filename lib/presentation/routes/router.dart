@@ -1,4 +1,5 @@
 import 'package:e_commerce/presentation/routes/routes.dart';
+import 'package:e_commerce/presentation/screens/cart_list/cart_list_page.dart';
 import 'package:e_commerce/presentation/screens/main/main_screen.dart';
 import 'package:e_commerce/presentation/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,11 @@ final GoRouter router = GoRouter(
           );
         },
       ),
+    ),
+    GoRoute(
+      path: Routes.cartList.path,
+      name: Routes.cartList.name,
+      builder: (context, state) => const CartListPage(),
     ),
   ],
 );
