@@ -1,6 +1,6 @@
 import 'package:e_commerce/core/theme/constant/app_icons.dart';
 import 'package:e_commerce/core/theme/custom/custom_theme.dart';
-import 'package:e_commerce/presentation/screens/main/widgets/top_app_bar/svg_icon_button.dart';
+import 'package:e_commerce/presentation/screens/main/fragments/top_app_bar/svg_icon_button.dart';
 import 'package:flutter/material.dart';
 
 class CounterButton extends StatelessWidget {

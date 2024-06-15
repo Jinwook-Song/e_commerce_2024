@@ -3,7 +3,7 @@ import 'package:e_commerce/core/theme/custom/custom_theme.dart';
 import 'package:e_commerce/core/utils/extensions.dart';
 import 'package:e_commerce/core/utils/widgets/counter_button.dart';
 import 'package:e_commerce/presentation/screens/main/bloc/cart_bloc/cart_bloc.dart';
-import 'package:e_commerce/presentation/screens/main/widgets/top_app_bar/svg_icon_button.dart';
+import 'package:e_commerce/presentation/screens/main/fragments/top_app_bar/svg_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';

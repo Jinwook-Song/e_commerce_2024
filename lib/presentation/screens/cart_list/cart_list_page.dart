@@ -3,10 +3,13 @@ import 'package:e_commerce/core/theme/constant/app_icons.dart';
 import 'package:e_commerce/core/theme/custom/custom_font_weight.dart';
 import 'package:e_commerce/core/theme/custom/custom_theme.dart';
 import 'package:e_commerce/core/utils/constants.dart';
+import 'package:e_commerce/core/utils/extensions.dart';
+import 'package:e_commerce/domain/model/display/cart/cart.model.dart';
 import 'package:e_commerce/presentation/screens/cart_list/bloc/cart_list_bloc/cart_list_bloc.dart';
 import 'package:e_commerce/presentation/screens/cart_list/fragments/cart_product_card/cart_product_card.dart';
 import 'package:e_commerce/presentation/screens/cart_list/fragments/cart_total_price/cart_total_price.dart';
-import 'package:e_commerce/presentation/screens/main/widgets/top_app_bar/svg_icon_button.dart';
+import 'package:e_commerce/presentation/screens/main/fragments/payment/payment_button.dart';
+import 'package:e_commerce/presentation/screens/main/fragments/top_app_bar/svg_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -155,7 +158,22 @@ class CartListView extends StatelessWidget {
           ],
         ),
       ),
-      //TODO 결제 버튼
+      bottomNavigationBar: BlocBuilder<CartListBloc, CartListState>(
+        builder: (context, state) {
+          if (!state.status.isSuccess) return const SizedBox.shrink();
+          List<Cart> selectedCartList = state.cartList
+              .where(
+                (cart) => state.selectedProduct.contains(
+                  cart.product.productId,
+                ),
+              )
+              .toList();
+          return PaymentButton(
+            selectedCartList: selectedCartList,
+            totalPrice: state.totalPrice,
+          );
+        },
+      ),
     );
   }
 }

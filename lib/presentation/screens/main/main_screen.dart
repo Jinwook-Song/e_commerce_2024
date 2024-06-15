@@ -6,7 +6,7 @@ import 'package:e_commerce/presentation/screens/home/home_screen.dart';
 import 'package:e_commerce/presentation/screens/main/bloc/cart_bloc/cart_bloc.dart';
 import 'package:e_commerce/presentation/screens/main/cubit/bottom_nav_cubit.dart';
 import 'package:e_commerce/presentation/screens/main/cubit/mall_type_cubit.dart';
-import 'package:e_commerce/presentation/screens/main/widgets/top_app_bar/top_app_bar.dart';
+import 'package:e_commerce/presentation/screens/main/fragments/top_app_bar/top_app_bar.dart';
 import 'package:e_commerce/presentation/screens/search/search_screen.dart';
 import 'package:e_commerce/presentation/screens/user/user_screen.dart';
 import 'package:flutter/material.dart';
