@@ -81,7 +81,6 @@ class DisplayDao {
   }) async {
     final localStorage = await Hive.openBox<CartEntity>(_cartDb);
 
-    await localStorage.clear();
     final curCart = localStorage.get(productId);
     if (curCart == null) {
       const status = '장바구니가 존재하지 않습니다.';

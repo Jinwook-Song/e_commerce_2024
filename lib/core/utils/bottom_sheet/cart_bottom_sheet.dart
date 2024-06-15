@@ -1,7 +1,10 @@
 import 'package:e_commerce/core/utils/bottom_sheet/widgets/add_cart_btn.dart';
 import 'package:e_commerce/core/utils/bottom_sheet/widgets/cart_price_info.dart';
 import 'package:e_commerce/core/utils/bottom_sheet/widgets/cart_product_info.dart';
+import 'package:e_commerce/presentation/screens/cart_list/bloc/cart_list_bloc/cart_list_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 Future<bool?> cartBottomSheet(BuildContext context) {
   return showModalBottomSheet(
@@ -15,16 +18,22 @@ Future<bool?> cartBottomSheet(BuildContext context) {
       ),
     ),
     builder: (_) {
-      return const SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CartProductInfo(),
-              Divider(height: 1, thickness: 1),
-              CartPriceInfo(),
-              AddCartBtn(),
-            ],
+      return SafeArea(
+        child: BlocListener<CartListBloc, CartListState>(
+          listener: (context, state) {
+            if (context.canPop()) context.pop();
+          },
+          listenWhen: (previous, current) => previous.status != current.status,
+          child: const SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CartProductInfo(),
+                Divider(height: 1, thickness: 1),
+                CartPriceInfo(),
+                AddCartBtn(),
+              ],
+            ),
           ),
         ),
       );

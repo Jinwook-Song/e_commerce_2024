@@ -8,6 +8,7 @@ import 'package:e_commerce/presentation/screens/cart_list/fragments/cart_product
 import 'package:e_commerce/presentation/screens/cart_list/fragments/cart_total_price/cart_total_price.dart';
 import 'package:e_commerce/presentation/screens/main/widgets/top_app_bar/svg_icon_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
@@ -37,6 +38,7 @@ class CartListView extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: AppColors.white,
+        surfaceTintColor: AppColors.white,
         leading: Center(
           child: SvgIconButton(
             icon: AppIcons.close,
@@ -55,39 +57,64 @@ class CartListView extends StatelessWidget {
             .semiBold,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(48),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    SvgIconButton(
-                      padding: 0,
-                      icon: AppIcons.checkMarkCircle,
-                      color: colorScheme.contentFourth,
-                      // TODO: 전체 선택
-                      onPressed: null,
-                    ),
-                    const Gap(8),
-                    BlocBuilder<CartListBloc, CartListState>(
-                      builder: (context, state) {
-                        return Text(
-                          '전체 선택 (${state.selectedProduct.length}/${state.cartList.length})',
-                          style: textTheme.titleSmall
-                              ?.copyWith(color: colorScheme.contentPrimary),
-                        );
-                      },
-                    ),
-                  ],
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: BlocBuilder<CartListBloc, CartListState>(
+                  builder: (context, state) {
+                    final bool isSelectedAll =
+                        state.selectedProduct.length == state.cartList.length &&
+                            state.cartList.isNotEmpty;
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            SvgIconButton(
+                              padding: 0,
+                              icon: isSelectedAll
+                                  ? AppIcons.checkMarkCircleFill
+                                  : AppIcons.checkMarkCircle,
+                              color: isSelectedAll
+                                  ? colorScheme.primary
+                                  : colorScheme.contentFourth,
+                              onPressed: () => context.read<CartListBloc>()
+                                ..add(const CartListSelectedAll()),
+                            ),
+                            const Gap(8),
+                            Text(
+                              '전체 선택 (${state.selectedProduct.length}/${state.cartList.length})',
+                              style: textTheme.titleSmall
+                                  ?.copyWith(color: colorScheme.contentPrimary),
+                            ),
+                          ],
+                        ),
+                        GestureDetector(
+                          onTap: () => context.read<CartListBloc>()
+                            ..add(
+                              CartListDeleted(
+                                productIds: state.selectedProduct,
+                              ),
+                            ),
+                          child: Text(
+                            '선택 삭제',
+                            style: textTheme.titleSmall.semiBold
+                                ?.copyWith(color: colorScheme.contentSecondary),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
                 ),
-                Text(
-                  '전체 선택',
-                  style: textTheme.titleSmall.semiBold
-                      ?.copyWith(color: colorScheme.contentSecondary),
-                ),
-              ],
-            ),
+              ),
+              const Gap(8),
+              Divider(
+                height: 8,
+                thickness: 8,
+                color: colorScheme.surface,
+              ),
+            ],
           ),
         ),
       ),
@@ -95,12 +122,6 @@ class CartListView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Gap(8),
-            Divider(
-              height: 8,
-              thickness: 8,
-              color: colorScheme.surface,
-            ),
             BlocBuilder<CartListBloc, CartListState>(
               builder: (context, state) {
                 switch (state.status) {

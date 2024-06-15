@@ -6,7 +6,6 @@ import 'package:e_commerce/core/utils/extensions.dart';
 import 'package:e_commerce/core/utils/widgets/counter_button.dart';
 import 'package:e_commerce/domain/model/display/cart/cart.model.dart';
 import 'package:e_commerce/presentation/screens/cart_list/bloc/cart_list_bloc/cart_list_bloc.dart';
-import 'package:e_commerce/presentation/screens/main/widgets/top_app_bar/svg_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -31,19 +30,17 @@ class CartProductCard extends StatelessWidget {
         children: [
           // 체크 박스
           GestureDetector(
+            onTap: () =>
+                context.read<CartListBloc>().add(CartListSelected(cart: cart)),
             child: SvgPicture.asset(
               (isSelected)
                   ? AppIcons.checkMarkCircleFill
                   : AppIcons.checkMarkCircle,
-              width: 28,
-              height: 28,
               colorFilter: ColorFilter.mode(
                 (isSelected) ? colorScheme.primary : colorScheme.contentFourth,
                 BlendMode.srcIn,
               ),
             ),
-            onTap: () =>
-                context.read<CartListBloc>().add(CartListSelected(cart: cart)),
           ),
           const Gap(8),
           Expanded(
@@ -100,58 +97,20 @@ class CartProductCard extends StatelessWidget {
 
                                     const Spacer(),
                                     // 수량 설정
-                                    Container(
-                                      decoration: const BoxDecoration(
-                                        border: Border.fromBorderSide(
-                                          BorderSide(color: AppColors.outline),
-                                        ),
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(4),
-                                        ),
-                                      ),
-                                      width: 96,
-                                      height: 36,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          SvgIconButton(
-                                            icon: AppIcons.subtract,
-                                            // iconSize: 16,
-                                            color: (cart.quantity == 1)
-                                                ? colorScheme.contentFourth
-                                                : colorScheme.contentPrimary,
-                                            onPressed: () => context
-                                                .read<CartListBloc>()
-                                                .add(
-                                                  CartListQtyDecreased(
-                                                    cart: cart,
-                                                  ),
+                                    CounterButton(
+                                      quantity: cart.quantity,
+                                      decrease: () =>
+                                          context.read<CartListBloc>().add(
+                                                CartListQtyDecreased(
+                                                  cart: cart,
                                                 ),
-                                          ),
-                                          Text(
-                                            cart.quantity.toString(),
-                                            style: textTheme.labelLarge
-                                                ?.copyWith(
-                                                  color: colorScheme
-                                                      .contentPrimary,
-                                                )
-                                                .semiBold,
-                                          ),
-                                          SvgIconButton(
-                                            icon: AppIcons.add,
-                                            // iconSize: 16,
-                                            color: colorScheme.contentPrimary,
-                                            onPressed: () => context
-                                                .read<CartListBloc>()
-                                                .add(
-                                                  CartListQtyIncreased(
-                                                    cart: cart,
-                                                  ),
+                                              ),
+                                      increase: () =>
+                                          context.read<CartListBloc>().add(
+                                                CartListQtyIncreased(
+                                                  cart: cart,
                                                 ),
-                                          ),
-                                        ],
-                                      ),
+                                              ),
                                     ),
                                   ],
                                 ),
@@ -164,6 +123,11 @@ class CartProductCard extends StatelessWidget {
                     SizedBox(
                       height: 28,
                       child: GestureDetector(
+                        onTap: () => context.read<CartListBloc>().add(
+                              CartListDeleted(
+                                productIds: [cart.product.productId],
+                              ),
+                            ),
                         child: SvgPicture.asset(
                           AppIcons.close,
                           width: 28,
@@ -173,11 +137,6 @@ class CartProductCard extends StatelessWidget {
                             BlendMode.srcIn,
                           ),
                         ),
-                        onTap: () => context.read<CartListBloc>().add(
-                              CartListDeleted(
-                                productIds: [cart.product.productId],
-                              ),
-                            ),
                       ),
                     ),
                   ],
