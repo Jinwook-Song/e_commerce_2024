@@ -1,6 +1,8 @@
 import 'package:e_commerce/core/utils/bottom_sheet/widgets/add_cart_btn.dart';
 import 'package:e_commerce/core/utils/bottom_sheet/widgets/cart_price_info.dart';
 import 'package:e_commerce/core/utils/bottom_sheet/widgets/cart_product_info.dart';
+import 'package:e_commerce/core/utils/extensions.dart';
+import 'package:e_commerce/core/utils/snack_bar/common_snack_bar.dart';
 import 'package:e_commerce/presentation/screens/cart_list/bloc/cart_list_bloc/cart_list_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,9 +23,13 @@ Future<bool?> cartBottomSheet(BuildContext context) {
       return SafeArea(
         child: BlocListener<CartListBloc, CartListState>(
           listener: (context, state) {
-            if (context.canPop()) context.pop();
+            if (context.canPop()) context.pop(!state.status.isError);
+            if (state.status.isError) {
+              CommonSnackBar.errorSnackBar(context, error: state.error);
+            }
           },
-          listenWhen: (previous, current) => previous.status != current.status,
+          listenWhen: (previous, current) =>
+              previous.status != current.status && !current.status.isLoading,
           child: const SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

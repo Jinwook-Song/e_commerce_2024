@@ -1,4 +1,6 @@
 import 'package:e_commerce/core/utils/bottom_sheet/cart_bottom_sheet.dart';
+import 'package:e_commerce/core/utils/logging.dart';
+import 'package:e_commerce/core/utils/snack_bar/common_snack_bar.dart';
 import 'package:e_commerce/presentation/screens/category/category_screen.dart';
 import 'package:e_commerce/presentation/screens/home/home_screen.dart';
 import 'package:e_commerce/presentation/screens/main/bloc/cart_bloc/cart_bloc.dart';
@@ -34,10 +36,20 @@ class MainScreenView extends StatelessWidget {
     return Scaffold(
       appBar: const TopAppBar(),
       body: BlocListener<CartBloc, CartState>(
-        listener: (context, state) {
-          cartBottomSheet(context).whenComplete(
+        listener: (context, state) async {
+          void addCartSnackBarRef() {
+            CommonSnackBar.addCartSnackBar(context);
+          }
+
+          final result = await cartBottomSheet(context).whenComplete(
             () => context.read<CartBloc>().add(const CartClosed()),
           );
+
+          logging(result);
+
+          if (result == true) {
+            addCartSnackBarRef();
+          }
         },
         listenWhen: (previous, current) =>
             previous.status.isClose && current.status.isOpen,
