@@ -1,7 +1,9 @@
+import 'package:e_commerce/core/theme/constant/app_colors.dart';
 import 'package:e_commerce/core/theme/constant/app_icons.dart';
 import 'package:e_commerce/core/theme/custom/custom_app_bar.dart';
 import 'package:e_commerce/core/theme/custom/custom_font_weight.dart';
 import 'package:e_commerce/presentation/routes/routes.dart';
+import 'package:e_commerce/presentation/screens/cart_list/bloc/cart_list_bloc/cart_list_bloc.dart';
 import 'package:e_commerce/presentation/screens/main/cubit/mall_type_cubit.dart';
 import 'package:e_commerce/presentation/screens/main/widgets/top_app_bar/svg_icon_button.dart';
 import 'package:flutter/material.dart';
@@ -81,10 +83,18 @@ class HomeAppbar extends StatelessWidget {
                 color: state.theme.iconColor,
                 onPressed: () {},
               ),
-              SvgIconButton(
-                icon: AppIcons.cart,
-                color: state.theme.iconColor,
-                onPressed: () => context.pushNamed(Routes.cartList.name),
+              Badge.count(
+                count: context.watch<CartListBloc>().state.cartList.length,
+                offset: const Offset(-2, 2),
+                backgroundColor: state.theme.badgeBgColor,
+                textColor: state.theme.badgeNumColor,
+                largeSize: 13,
+                textStyle: const TextStyle(fontSize: 9).bold,
+                child: SvgIconButton(
+                  icon: AppIcons.cart,
+                  color: state.theme.iconColor,
+                  onPressed: () => context.pushNamed(Routes.cartList.name),
+                ),
               ),
             ],
           ),
