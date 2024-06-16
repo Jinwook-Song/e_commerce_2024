@@ -16,7 +16,7 @@ part 'request.dart';
 // Configure routes.
 final _router = Router()
   ..get('/api/menus/<mallType>', menuHandler)
-  ..get('/api/view_modules/<tabId>/<page>', viewModuleHandler);
+  ..get('/api/view-modules/<tabId>/<page>', viewModuleHandler);
 
 void main(List<String> args) async {
   final ip = InternetAddress.anyIPv4;
