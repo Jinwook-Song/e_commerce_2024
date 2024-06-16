@@ -41,7 +41,7 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
 
     Payload payload = _getPayLoad(event.cartList);
 
-    var (isSuccess, data) = await _bootPay(
+    final (isSuccess, data) = await _bootPay(
       event.context,
       payload,
     );
@@ -55,9 +55,9 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
         ),
       );
     } else {
-      var message = '결제가 실패했습니다. 잠시후 다시 시도해주세요';
+      String message = '결제가 실패했습니다. 잠시후 다시 시도해주세요';
       if (data != null) {
-        var decoded = jsonDecode(data);
+        final Map<String, dynamic> decoded = jsonDecode(data);
         message = decoded['message'] ?? message;
       }
       emit(state.copyWith(status: PaymentStatus.error, message: message));
@@ -65,6 +65,7 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
   }
 }
 
+/// bootpay와 통신
 Future<(bool, String?)> _bootPay(BuildContext context, Payload payload) async {
   final Completer<(bool, String?)> completer = Completer();
 
@@ -96,6 +97,7 @@ Future<(bool, String?)> _bootPay(BuildContext context, Payload payload) async {
   return completer.future;
 }
 
+/// Bootpay에 전달할 내용
 Payload _getPayLoad(List<Cart> cartList) {
   Payload payload = Payload();
   double totalPrice = 0.0;
@@ -112,8 +114,8 @@ Payload _getPayLoad(List<Cart> cartList) {
     return item;
   }).toList();
 
-  payload.androidApplicationId = '64566178755e27001b376047';
-  payload.iosApplicationId = '64566178755e27001b376048';
+  payload.androidApplicationId = '666d779f508d562d4b42ecc4';
+  payload.iosApplicationId = '666d779f508d562d4b42ecc5';
 
   payload.pg = 'kcp';
   payload.orderName = cartList.length > 1
@@ -125,6 +127,7 @@ Payload _getPayLoad(List<Cart> cartList) {
   payload.items = itemList;
 
   Extra extra = Extra();
+  // IOS의 경우 결제후 다시 앱으로 돌아오기 위해
   extra.appScheme = 'facamMarket';
 
   payload.extra = extra;
