@@ -5,7 +5,7 @@ import 'package:e_commerce/data/dto/common/response_wrapper/response_wrapper.dar
 import 'package:e_commerce/data/dto/display/menu/menu.dto.dart';
 import 'package:e_commerce/data/mapper/common.mapper.dart';
 import 'package:e_commerce/data/mapper/display.mapper.dart';
-import 'package:e_commerce/data/repository_impl/display_repository_impl.dart';
+import 'package:e_commerce/data/repository_impl/display.repository_impl.dart';
 import 'package:e_commerce/domain/model/display/menu/menu.model.dart';
 import 'package:e_commerce/domain/repository/display.repository.dart';
 import 'package:e_commerce/presentation/screens/main/cubit/mall_type_cubit.dart';

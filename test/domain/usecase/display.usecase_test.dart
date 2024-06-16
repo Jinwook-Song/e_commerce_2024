@@ -3,7 +3,7 @@
 import 'package:e_commerce/core/utils/error/error_response.dart';
 import 'package:e_commerce/data/data_source/local/display.dao.dart';
 import 'package:e_commerce/data/data_source/remote/display.api.dart';
-import 'package:e_commerce/data/repository_impl/display_repository_impl.dart';
+import 'package:e_commerce/data/repository_impl/display.repository_impl.dart';
 import 'package:e_commerce/domain/model/common/result.dart';
 import 'package:e_commerce/domain/model/display/menu/menu.model.dart';
 import 'package:e_commerce/domain/repository/display.repository.dart';
