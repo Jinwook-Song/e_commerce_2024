@@ -8,7 +8,7 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:e_commerce/data/data_source/data_source_module.dart' as _i16;
+import 'package:e_commerce/data/data_source/data_source_module.dart' as _i17;
 import 'package:e_commerce/data/data_source/local/display.dao.dart' as _i6;
 import 'package:e_commerce/data/data_source/remote/display.api.dart' as _i5;
 import 'package:e_commerce/data/repository_impl/display.repository_impl.dart'
@@ -29,6 +29,8 @@ import 'package:e_commerce/presentation/screens/main/bloc/cart_bloc/cart_bloc.da
     as _i4;
 import 'package:e_commerce/presentation/screens/main/bloc/paymoent_bloc/payment_bloc.dart'
     as _i3;
+import 'package:e_commerce/presentation/screens/main/bloc/user_bloc/user_bloc.dart'
+    as _i16;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
@@ -62,8 +64,9 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i14.ViewModuleBloc(gh<_i11.DisplayUsecase>()));
     gh.factory<_i15.CartListBloc>(
         () => _i15.CartListBloc(gh<_i11.DisplayUsecase>()));
+    gh.factory<_i16.UserBloc>(() => _i16.UserBloc(gh<_i12.UserUsecase>()));
     return this;
   }
 }
 
-class _$DataSourceModule extends _i16.DataSourceModule {}
+class _$DataSourceModule extends _i17.DataSourceModule {}
