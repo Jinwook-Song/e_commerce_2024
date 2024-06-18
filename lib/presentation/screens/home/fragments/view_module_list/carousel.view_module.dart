@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:e_commerce/core/theme/constant/app_colors.dart';
+import 'package:e_commerce/core/utils/logging.dart';
+import 'package:e_commerce/core/utils/widgets/common_image.dart';
 import 'package:e_commerce/domain/model/display/display.model.dart';
 import 'package:e_commerce/domain/model/display/product_info/product_info.model.dart';
 import 'package:e_commerce/presentation/screens/home/fragments/view_module_list/factory/view_module_widget.dart';
@@ -70,11 +72,10 @@ class _CarouselViewModlueState extends State<CarouselViewModlue> {
               });
             },
             itemBuilder: (context, index) {
-              final src = products[index % products.length].imageUrl;
-              return Image.network(
-                src,
-                fit: BoxFit.cover,
-              );
+              // final src = products[index % products.length].imageUrl;
+              final src =
+                  'https://i.pravatar.cc/150?img=${index % 5 + 2 - 1}%E2%80%8B';
+              return CommonImage(src);
             },
           ),
           Positioned(
