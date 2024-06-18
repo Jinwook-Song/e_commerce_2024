@@ -1,6 +1,6 @@
 import 'package:e_commerce/data/data_source/local/display.dao.dart';
 import 'package:e_commerce/data/data_source/mock/display/display.mock_api.dart';
-import 'package:e_commerce/data/data_source/remote/display.api.dart';
+import 'package:e_commerce/data/data_source/remote/display/display.api.dart';
 import 'package:e_commerce/data/dto/common/response_wrapper/response_wrapper.dart';
 import 'package:e_commerce/data/dto/display/menu/menu.dto.dart';
 import 'package:e_commerce/data/mapper/common.mapper.dart';

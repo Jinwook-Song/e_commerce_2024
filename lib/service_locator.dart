@@ -1,5 +1,5 @@
 import 'package:e_commerce/data/data_source/mock/display/display.mock_api.dart';
-import 'package:e_commerce/data/data_source/remote/display.api.dart';
+import 'package:e_commerce/data/data_source/remote/display/display.api.dart';
 import 'package:e_commerce/data/repository_impl/display.repository_impl.dart';
 import 'package:e_commerce/domain/repository/display.repository.dart';
 import 'package:e_commerce/domain/usecase/display/display.usecase.dart';

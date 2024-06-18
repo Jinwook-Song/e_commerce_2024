@@ -3,7 +3,8 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:e_commerce/core/utils/rest_client/rest_client.dart';
 import 'package:e_commerce/data/data_source/local/display.dao.dart';
-import 'package:e_commerce/data/data_source/remote/display.api.dart';
+import 'package:e_commerce/data/data_source/remote/display/display.api.dart';
+import 'package:e_commerce/data/data_source/remote/user/user.api.dart';
 import 'package:injectable/injectable.dart';
 
 @module
@@ -19,6 +20,8 @@ abstract class DataSourceModule {
     return DisplayApi(_dio);
   }
 
+  @singleton
+  UserApi get userApi => UserApi(_dio);
   @singleton
   DisplayDao get displayDao => DisplayDao();
 }
