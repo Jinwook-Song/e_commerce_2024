@@ -2,10 +2,12 @@ import 'package:e_commerce/core/theme/theme_data.dart';
 import 'package:e_commerce/data/entity/cart/cart.entity.dart';
 import 'package:e_commerce/data/entity/product_info/product_info.entity.dart';
 import 'package:e_commerce/dependency_injection.dart';
+import 'package:e_commerce/firebase_options.dart';
 import 'package:e_commerce/presentation/routes/router.dart';
 import 'package:e_commerce/presentation/screens/cart_list/bloc/cart_list_bloc/cart_list_bloc.dart';
 import 'package:e_commerce/presentation/screens/main/bloc/cart_bloc/cart_bloc.dart';
 import 'package:e_commerce/presentation/screens/main/bloc/user_bloc/user_bloc.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -22,6 +24,11 @@ Future<void> main() async {
   KakaoSdk.init(
     nativeAppKey: '4bd4550f42babcb559c62f68a12f7647',
   );
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(const MainApp());
 }
 

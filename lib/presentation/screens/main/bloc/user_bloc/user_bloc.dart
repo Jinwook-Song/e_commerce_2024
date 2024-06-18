@@ -2,6 +2,7 @@ import 'package:e_commerce/core/utils/constants.dart';
 import 'package:e_commerce/core/utils/error/error_response.dart';
 import 'package:e_commerce/core/utils/exception/common_exception.dart';
 import 'package:e_commerce/core/utils/logging.dart';
+import 'package:e_commerce/domain/model/common/result.dart';
 import 'package:e_commerce/domain/usecase/user/login.usecase.dart';
 import 'package:e_commerce/domain/usecase/user/login_w_token.usecase.dart';
 import 'package:e_commerce/domain/usecase/user/logout.usecase.dart';
@@ -31,15 +32,20 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     UserLogin event,
     Emitter<UserState> emit,
   ) async {
+    emit(state.copyWith(status: Status.loading));
     try {
-      emit(state.copyWith(status: Status.loading));
+      final response = await _userUsecase.execute<Result<User>>(
+        usecase: LoginUsecase(),
+      );
 
-      final User? user = await _userUsecase.execute(usecase: LoginUsecase());
-      if (user == null) {
-        emit(state.copyWith(status: Status.initial));
-      } else {
-        emit(state.copyWith(status: Status.success, user: user));
-      }
+      response.when(
+        success: (user) {
+          emit(state.copyWith(status: Status.success, user: user));
+        },
+        failure: (_) {
+          emit(state.copyWith(status: Status.initial));
+        },
+      );
     } on ErrorResponse catch (error) {
       emit(
         state.copyWith(
@@ -63,18 +69,20 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     Emitter<UserState> emit,
   ) async {
     emit(state.copyWith(status: Status.loading));
+    emit(state.copyWith(status: Status.loading));
     try {
-      final User? user =
-          await _userUsecase.execute(usecase: LoginWithTokenUsecase());
+      final response = await _userUsecase.execute<Result<User>>(
+        usecase: LoginWithTokenUsecase(),
+      );
 
-      // 기존 로그인 된 유저 정보 존재하지 않는 경우
-      if (user == null) {
-        emit(state.copyWith(status: Status.initial));
-      }
-      // 토큰 갱신 성공
-      else {
-        emit(state.copyWith(status: Status.success, user: user));
-      }
+      response.when(
+        success: (user) {
+          emit(state.copyWith(status: Status.success, user: user));
+        },
+        failure: (_) {
+          emit(state.copyWith(status: Status.initial));
+        },
+      );
     } on ErrorResponse catch (error) {
       emit(
         state.copyWith(
