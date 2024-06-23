@@ -1,6 +1,8 @@
 import 'package:e_commerce/core/theme/theme_data.dart';
 import 'package:e_commerce/data/entity/cart/cart.entity.dart';
 import 'package:e_commerce/data/entity/product_info/product_info.entity.dart';
+import 'package:e_commerce/data/entity/view_module/view_module.entity.dart';
+import 'package:e_commerce/data/entity/view_module_list/view_module_list.entity.dart';
 import 'package:e_commerce/dependency_injection.dart';
 import 'package:e_commerce/firebase_options.dart';
 import 'package:e_commerce/presentation/routes/router.dart';
@@ -20,6 +22,8 @@ Future<void> main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(ProductInfoEntityAdapter());
   Hive.registerAdapter(CartEntityAdapter());
+  Hive.registerAdapter(ViewModuleEntityAdapter());
+  Hive.registerAdapter(ViewModuleListEntityAdapter());
 
   KakaoSdk.init(
     nativeAppKey: '4bd4550f42babcb559c62f68a12f7647',

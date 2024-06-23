@@ -36,9 +36,17 @@ class ViewModuleBloc extends Bloc<ViewModuleEvent, ViewModuleState> {
     );
   }
 
-  Future<Result<List<ViewModule>>> _fetch(int tabId, [int page = 1]) async {
+  Future<Result<List<ViewModule>>> _fetch(
+    int tabId, {
+    int page = 1,
+    required bool isRefresh,
+  }) async {
     return await _displayUsecase.execute(
-      usecase: GetViewModulesUsecase(tabId: tabId, page: page),
+      usecase: GetViewModulesUsecase(
+        tabId: tabId,
+        page: page,
+        isRefresh: isRefresh,
+      ),
     );
   }
 
@@ -49,19 +57,17 @@ class ViewModuleBloc extends Bloc<ViewModuleEvent, ViewModuleState> {
     emit(state.copyWith(status: Status.loading));
     final int tabId = event.tabId;
 
-    if (event.isRefresh) {
-      emit(
-        state.copyWith(
-          status: Status.initial,
-          currentPage: 1,
-          isEndOfPage: false,
-          viewModules: [],
-        ),
-      );
-    }
+    emit(
+      state.copyWith(
+        status: Status.initial,
+        currentPage: 1,
+        isEndOfPage: false,
+        viewModules: [],
+      ),
+    );
 
     try {
-      final response = await _fetch(tabId);
+      final response = await _fetch(tabId, isRefresh: event.isRefresh);
       response.when(
         success: (viewModules) {
           ViewModuleFactory viewModuleFactory = ViewModuleFactory();
@@ -104,7 +110,7 @@ class ViewModuleBloc extends Bloc<ViewModuleEvent, ViewModuleState> {
     emit(state.copyWith(status: Status.loading));
 
     try {
-      final response = await _fetch(tabId, nextPage);
+      final response = await _fetch(tabId, page: nextPage, isRefresh: false);
       response.when(
         success: (viewModules) {
           if (viewModules.isEmpty) {

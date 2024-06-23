@@ -2,6 +2,7 @@ import 'package:e_commerce/data/dto/display/display.dto.dart';
 import 'package:e_commerce/data/dto/display/product_info/product_info.dto.dart';
 import 'package:e_commerce/data/entity/cart/cart.entity.dart';
 import 'package:e_commerce/data/entity/product_info/product_info.entity.dart';
+import 'package:e_commerce/data/entity/view_module/view_module.entity.dart';
 import 'package:e_commerce/domain/model/display/cart/cart.model.dart';
 import 'package:e_commerce/domain/model/display/display.model.dart';
 import 'package:e_commerce/domain/model/display/product_info/product_info.model.dart';
@@ -23,6 +24,36 @@ extension ViewModuleDtoEx on ViewModuleDto {
         products: products?.map((dto) => dto.toModel()).toList() ?? [],
         tabs: tabs ?? [],
       );
+}
+
+/// ENTITY -> MODEL
+extension ViewModuleEntityEx on ViewModuleEntity {
+  ViewModule toModel() {
+    return ViewModule(
+      type: type,
+      title: title,
+      subtitle: subtitle,
+      imageUrl: imageUrl,
+      time: time,
+      products: products.map((entity) => entity.toModel()).toList(),
+      tabs: tabs,
+    );
+  }
+}
+
+/// MODEL -> ENTITY
+extension ViewModuleEx on ViewModule {
+  ViewModuleEntity toEntity() {
+    return ViewModuleEntity(
+      type: type,
+      title: title,
+      subtitle: subtitle,
+      imageUrl: imageUrl,
+      time: time,
+      products: products.map((model) => model.toEntity()).toList(),
+      tabs: tabs,
+    );
+  }
 }
 
 extension ProductInfoDtoEx on ProductInfoDto {

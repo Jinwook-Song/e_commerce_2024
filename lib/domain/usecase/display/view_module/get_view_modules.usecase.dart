@@ -6,9 +6,11 @@ import 'package:e_commerce/domain/usecase/base/remote.usecase.dart';
 class GetViewModulesUsecase extends RemoteUsecase<DisplayRepository> {
   final int tabId;
   final int page;
+  final bool isRefresh;
   GetViewModulesUsecase({
     required this.tabId,
     required this.page,
+    required this.isRefresh,
   });
 
   @override
@@ -16,6 +18,7 @@ class GetViewModulesUsecase extends RemoteUsecase<DisplayRepository> {
     final result = await repository.getViewModuleByTabId(
       tabId: tabId,
       page: page,
+      isRefresh: isRefresh,
     );
 
     return result.status == 'SUCCESS'
