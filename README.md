@@ -2,15 +2,16 @@
 
 A new Flutter project.
 
-## Getting Started
+## Flavor
 
-This project is a starting point for a Flutter application.
+- Firebase 프로젝트 분리
+  - android > app > src
+    - dev
+    - prod
+  - ios > Runner > config
+    - dev
+    - prod
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+`flutterfire configure -o lib/firebase_options_dev.dart -a com.example.e_commerce.dev -i com.example.eCommerce.dev`
+로 생성한 firebase config file들을 각각 dev와 prod 경로로 이동시킨다.
+주의할점은 실행전 파일을 옮기지 않으면 덮어씌워진다.
