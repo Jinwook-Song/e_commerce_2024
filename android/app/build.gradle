@@ -61,6 +61,23 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+
+    /// Flavor 설정
+    flavorDimensions "app"
+
+    productFlavors {
+        dev {
+            dimension "app"
+            applicationIdSuffix ".dev" // 기기와 google playstore에서 별도의 앱으로 인식
+            resValue "string", "app_name", "패캠마켓DEV"
+        }
+        prod {
+            dimension "app"
+            resValue "string", "app_name", "패캠마켓"
+        }
+    }
+
+
 }
 
 flutter {

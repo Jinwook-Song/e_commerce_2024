@@ -15,3 +15,6 @@ A new Flutter project.
 `flutterfire configure -o lib/firebase_options_dev.dart -a com.example.e_commerce.dev -i com.example.eCommerce.dev`
 로 생성한 firebase config file들을 각각 dev와 prod 경로로 이동시킨다.
 주의할점은 실행전 파일을 옮기지 않으면 덮어씌워진다.
+
+run
+`flutter run --flavor dev`
