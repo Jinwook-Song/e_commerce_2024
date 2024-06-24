@@ -1,6 +1,8 @@
 import 'package:e_commerce/core/theme/theme_data.dart';
+import 'package:e_commerce/core/utils/constants.dart';
 import 'package:e_commerce/data/entity/cart/cart.entity.dart';
 import 'package:e_commerce/data/entity/product_info/product_info.entity.dart';
+import 'package:e_commerce/data/entity/target_api.dart';
 import 'package:e_commerce/data/entity/view_module/view_module.entity.dart';
 import 'package:e_commerce/data/entity/view_module_list/view_module_list.entity.dart';
 import 'package:e_commerce/dependency_injection.dart';
@@ -16,14 +18,17 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 Future<void> main() async {
-  configureDependencies();
-
   // Hive 초기화
   await Hive.initFlutter();
   Hive.registerAdapter(ProductInfoEntityAdapter());
   Hive.registerAdapter(CartEntityAdapter());
   Hive.registerAdapter(ViewModuleEntityAdapter());
   Hive.registerAdapter(ViewModuleListEntityAdapter());
+  Hive.registerAdapter(TargetApiAdapter());
+
+  await TargetApiValue().setTargetApi();
+  // Api를 set한 이후에 실행되도록
+  configureDependencies();
 
   KakaoSdk.init(
     nativeAppKey: '4bd4550f42babcb559c62f68a12f7647',
@@ -65,6 +70,26 @@ class MainApp extends StatelessWidget {
         routerConfig: router,
         theme: CustomThemeData.themeData,
       ),
+    );
+  }
+}
+
+class TargetApiValue {
+  TargetApi? targetApi = TargetApi.REMOTE;
+  bool get isRemoteApi => targetApi == TargetApi.REMOTE;
+
+  static final TargetApiValue _instance = TargetApiValue._internal();
+
+  TargetApiValue._internal();
+
+  factory TargetApiValue() => _instance;
+
+  Future<void> setTargetApi() async {
+    final localStorage = await Hive.openBox<TargetApi>(Constants.targetApiKey);
+
+    targetApi = localStorage.get(
+      Constants.targetApiKey,
+      defaultValue: TargetApi.REMOTE,
     );
   }
 }

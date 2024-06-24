@@ -54,14 +54,22 @@ class _ViewModuleListState extends State<ViewModuleList> {
         builder: (context, state) {
           return (state.status.isInitial || state.viewModules.isEmpty)
               ? const HomePlaceholder()
-              : ListView(
+              : ListView.builder(
                   controller: _scrollController,
-                  children: [
-                    ...state.viewModules,
-                    if (state.status.isLoading)
-                      const LoadingWidget(isBottom: true),
-                    const Footer(),
-                  ],
+                  itemCount: state.viewModules.length,
+                  itemBuilder: (context, index) {
+                    if (index == state.viewModules.length - 1) {
+                      return Column(
+                        children: [
+                          state.viewModules[index],
+                          if (state.status.isLoading)
+                            const LoadingWidget(isBottom: true),
+                          const Footer(),
+                        ],
+                      );
+                    }
+                    return state.viewModules[index];
+                  },
                 );
         },
       ),

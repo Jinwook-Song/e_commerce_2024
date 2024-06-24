@@ -1,4 +1,3 @@
-import 'package:e_commerce/core/theme/constant/app_colors.dart';
 import 'package:e_commerce/core/theme/constant/app_icons.dart';
 import 'package:e_commerce/core/theme/custom/custom_app_bar.dart';
 import 'package:e_commerce/core/theme/custom/custom_font_weight.dart';
@@ -6,6 +5,7 @@ import 'package:e_commerce/presentation/routes/routes.dart';
 import 'package:e_commerce/presentation/screens/cart_list/bloc/cart_list_bloc/cart_list_bloc.dart';
 import 'package:e_commerce/presentation/screens/main/cubit/mall_type_cubit.dart';
 import 'package:e_commerce/presentation/screens/main/fragments/top_app_bar/svg_icon_button.dart';
+import 'package:e_commerce/presentation/screens/main/utils/server_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -29,7 +29,14 @@ class HomeAppbar extends StatelessWidget {
               icon: AppIcons.mainLogo,
               color: state.theme.logoColor,
               padding: 8,
-              onPressed: () {},
+              onPressed: () async {
+                await showDialog<bool>(
+                  context: context,
+                  builder: (_) {
+                    return const ServerSelector();
+                  },
+                );
+              },
             ),
             centerTitle: true,
             title: AnimatedContainer(
