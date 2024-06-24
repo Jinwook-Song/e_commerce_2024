@@ -6,7 +6,6 @@ import 'package:e_commerce/data/entity/target_api.dart';
 import 'package:e_commerce/data/entity/view_module/view_module.entity.dart';
 import 'package:e_commerce/data/entity/view_module_list/view_module_list.entity.dart';
 import 'package:e_commerce/dependency_injection.dart';
-import 'package:e_commerce/firebase_options_dev.dart';
 import 'package:e_commerce/presentation/routes/router.dart';
 import 'package:e_commerce/presentation/screens/cart_list/bloc/cart_list_bloc/cart_list_bloc.dart';
 import 'package:e_commerce/presentation/screens/main/bloc/cart_bloc/cart_bloc.dart';
@@ -14,10 +13,11 @@ import 'package:e_commerce/presentation/screens/main/bloc/user_bloc/user_bloc.da
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
-Future<void> main() async {
+Future<void> main(name, options) async {
   // Hive 초기화
   await Hive.initFlutter();
   Hive.registerAdapter(ProductInfoEntityAdapter());
@@ -35,7 +35,8 @@ Future<void> main() async {
   );
 
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
+    name: name,
+    options: options,
   );
 
   runApp(const MainApp());
@@ -66,7 +67,7 @@ class MainApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp.router(
-        debugShowCheckedModeBanner: false,
+        debugShowCheckedModeBanner: dotenv.env['FLAVOR'] == 'dev',
         routerConfig: router,
         theme: CustomThemeData.themeData,
       ),

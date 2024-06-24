@@ -8,6 +8,7 @@ import 'package:e_commerce/presentation/screens/main/fragments/top_app_bar/svg_i
 import 'package:e_commerce/presentation/screens/main/utils/server_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 
 class HomeAppbar extends StatelessWidget {
@@ -25,18 +26,21 @@ class HomeAppbar extends StatelessWidget {
             backgroundColor: Colors.transparent,
             systemOverlayStyle: state.theme.systemUiOverlayStyle,
             leadingWidth: 86,
-            leading: SvgIconButton(
-              icon: AppIcons.mainLogo,
-              color: state.theme.logoColor,
-              padding: 8,
-              onPressed: () async {
-                await showDialog<bool>(
-                  context: context,
-                  builder: (_) {
-                    return const ServerSelector();
-                  },
-                );
-              },
+            leading: AbsorbPointer(
+              absorbing: dotenv.env['FLAVOR'] == 'prod',
+              child: SvgIconButton(
+                icon: AppIcons.mainLogo,
+                color: state.theme.logoColor,
+                padding: 8,
+                onPressed: () async {
+                  await showDialog<bool>(
+                    context: context,
+                    builder: (_) {
+                      return const ServerSelector();
+                    },
+                  );
+                },
+              ),
             ),
             centerTitle: true,
             title: AnimatedContainer(
