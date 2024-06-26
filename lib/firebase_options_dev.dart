@@ -65,4 +65,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'e-commerce-jw.appspot.com',
     iosBundleId: 'com.example.eCommerce.dev',
   );
+
 }

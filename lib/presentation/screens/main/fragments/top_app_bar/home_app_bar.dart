@@ -33,6 +33,7 @@ class HomeAppbar extends StatelessWidget {
                 color: state.theme.logoColor,
                 padding: 8,
                 onPressed: () async {
+                  // throw Exception();
                   await showDialog<bool>(
                     context: context,
                     builder: (_) {

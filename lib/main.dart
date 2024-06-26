@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:e_commerce/core/theme/theme_data.dart';
 import 'package:e_commerce/core/utils/constants.dart';
 import 'package:e_commerce/data/entity/cart/cart.entity.dart';
@@ -11,6 +13,7 @@ import 'package:e_commerce/presentation/screens/cart_list/bloc/cart_list_bloc/ca
 import 'package:e_commerce/presentation/screens/main/bloc/cart_bloc/cart_bloc.dart';
 import 'package:e_commerce/presentation/screens/main/bloc/user_bloc/user_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -18,6 +21,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 Future<void> main(name, options) async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   // Hive 초기화
   await Hive.initFlutter();
   Hive.registerAdapter(ProductInfoEntityAdapter());
@@ -38,6 +43,17 @@ Future<void> main(name, options) async {
     name: name,
     options: options,
   );
+
+  if (dotenv.env['FLAVOR'] == 'prod') {
+    // Pass all uncaught "fatal" errors from the framework to Crashlytics
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+
+    // Pass all uncaught asynchronous errors that aren't handled by the Flutter
+    PlatformDispatcher.instance.onError = (error, stack) {
+      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+      return true;
+    };
+  }
 
   runApp(const MainApp());
 }
