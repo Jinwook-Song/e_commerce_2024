@@ -15,63 +15,45 @@ class ViewModuleList extends StatefulWidget {
 }
 
 class _ViewModuleListState extends State<ViewModuleList> {
-  final ScrollController _scrollController = ScrollController();
-
-  bool get _isEndScroll {
-    if (!_scrollController.hasClients) return false;
-    final maxScroll = _scrollController.position.maxScrollExtent;
-    final currScroll = _scrollController.offset;
-    return currScroll > maxScroll * 0.9;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _scrollController.addListener(_onScroll);
-  }
-
-  @override
-  void dispose() {
-    _scrollController
-      ..removeListener(_onScroll)
-      ..dispose();
-    super.dispose();
-  }
-
-  void _onScroll() {
-    if (_isEndScroll) {
-      context.read<ViewModuleBloc>().add(ViewModuleFetched());
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async => context
           .read<ViewModuleBloc>()
           .add(ViewModuleInitialized(widget.tabId, isRefresh: true)),
-      child: BlocBuilder<ViewModuleBloc, ViewModuleState>(
-        builder: (context, state) {
-          return (state.status.isInitial || state.viewModules.isEmpty)
-              ? const HomePlaceholder()
-              : ListView.builder(
-                  controller: _scrollController,
-                  itemCount: state.viewModules.length,
-                  itemBuilder: (context, index) {
-                    if (index == state.viewModules.length - 1) {
-                      return Column(
-                        children: [
-                          state.viewModules[index],
-                          if (state.status.isLoading)
-                            const LoadingWidget(isBottom: true),
-                          const Footer(),
-                        ],
-                      );
-                    }
-                    return state.viewModules[index];
-                  },
-                );
+      child: NotificationListener(
+        onNotification: (ScrollNotification scrollNotification) {
+          final maxScroll = scrollNotification.metrics.maxScrollExtent;
+          final curScroll = scrollNotification.metrics.pixels;
+
+          if (curScroll >= maxScroll * (0.9)) {
+            context.read<ViewModuleBloc>().add(ViewModuleFetched());
+          }
+
+          return false;
         },
+        child: BlocBuilder<ViewModuleBloc, ViewModuleState>(
+          builder: (context, state) {
+            return (state.status.isInitial || state.viewModules.isEmpty)
+                ? const HomePlaceholder()
+                : ListView.builder(
+                    itemCount: state.viewModules.length,
+                    itemBuilder: (context, index) {
+                      if (index == state.viewModules.length - 1) {
+                        return Column(
+                          children: [
+                            state.viewModules[index],
+                            if (state.status.isLoading)
+                              const LoadingWidget(isBottom: true),
+                            const Footer(),
+                          ],
+                        );
+                      }
+                      return state.viewModules[index];
+                    },
+                  );
+          },
+        ),
       ),
     );
   }
